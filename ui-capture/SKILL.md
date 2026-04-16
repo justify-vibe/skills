@@ -37,9 +37,12 @@ await row.evaluate((el) => el.scrollBy({ left: 800, behavior: 'smooth' }));
 ## Quick Reference
 安装依赖（Node.js ≥ 18，pnpm ≥ 8）：
 ```bash
+# 可选：手动安装
 pnpm add -D @playwright/test playwright
 pnpm exec playwright install --with-deps
 ```
+
+说明：首次执行 `pnpm run record -- <目录>` 会自动完成依赖与浏览器安装。
 运行与查看产物（必须传目录）：
 ```bash
 pnpm run record -- ./proto

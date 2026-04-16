@@ -27,7 +27,8 @@ npx skills add <owner>/<repo>@ui-capture -y
 ## 依赖
 - Node.js >= 18
 - pnpm >= 8
-- @playwright/test（安装时会自动下载浏览器）
+
+首次执行 `pnpm run record -- <目录>` 时会自动完成依赖与浏览器安装（无需手动预装）。
 
 ## 目录结构
 - playwright.config.ts — Playwright 全局配置（3x 高清、手机视口、视频与 trace）

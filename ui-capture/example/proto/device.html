@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thynco | Device</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="./common.css">
+    <link rel="stylesheet" href="./device.css">
+</head>
+
+<body>
+    <div id="canvas-viewport">
+        <div class="mesh-bg"></div>
+        <div id="app-content">
+            <section id="device" class="stage active device-stage">
+                <header class="sub-bar">
+                    <button type="button" class="circle-btn" aria-label="Back" data-nav-to="devices.html">
+                        <span class="material-icons">chevron_left</span>
+                    </button>
+                    <div class="sub-bar-title">
+                        <h4 data-device-name>Device</h4>
+                        <p class="header-subtitle" data-device-meta>—</p>
+                    </div>
+                    <div class="sub-bar-spacer"></div>
+                </header>
+
+                <div class="device-hero google-card" data-device-hero>
+                    <div class="device-hero-top">
+                        <div class="device-hero-icon">
+                            <span class="material-icons" data-device-icon>devices</span>
+                        </div>
+                        <div class="device-hero-info">
+                            <h1 data-device-title>—</h1>
+                            <p data-device-subtitle>—</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sheet-controls device-controls" data-device-controls></div>
+
+                <div class="device-missing google-card" data-device-missing hidden>
+                    <div class="device-missing-title">Device not found</div>
+                    <div class="device-missing-subtitle">Return to Devices and choose a device again.</div>
+                    <button type="button" class="device-missing-btn" data-nav-to="devices.html">Back to Devices</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+
+</html>
+

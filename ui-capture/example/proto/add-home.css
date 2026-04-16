@@ -1,0 +1,135 @@
+/* Add Home page specific styles */
+.add-home-stage {
+    background: transparent;
+}
+
+.add-home-bar {
+    background: transparent;
+}
+
+.add-home-body {
+    padding: 0 24px 120px;
+}
+
+.builder-step {
+    margin-bottom: 24px;
+}
+
+.builder-step h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 12px;
+    padding: 0 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.builder-card {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 20px;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.builder-card-left {
+    display: flex;
+    align-items: center;
+}
+
+.builder-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    color: var(--primary);
+}
+
+.builder-card-info h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 2px;
+}
+
+.builder-card-info p {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.builder-card-chevron {
+    color: #d1d1d6;
+    font-size: 20px !important;
+}
+
+.add-home-hero {
+    margin-bottom: 24px;
+    padding: 24px;
+    text-align: center;
+}
+
+.add-home-hero-title {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.add-home-hero-sub {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.add-home-input {
+    width: 100%;
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: var(--card-glass);
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.add-home-hint {
+    font-size: 12px;
+    color: #80868b;
+    padding: 0 4px;
+}
+
+.add-home-location-card {
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.builder-card-icon--location {
+    background: rgba(52, 168, 83, 0.1);
+    color: #34a853;
+}
+
+.add-home-location-clear {
+    margin-top: 8px;
+    display: none;
+}
+
+.add-home-foot {
+    margin-top: 32px;
+    font-size: 13px;
+    color: #80868b;
+    text-align: center;
+    line-height: 1.5;
+}
+

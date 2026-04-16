@@ -1,0 +1,16 @@
+{
+  "name": "ui-capture",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "pw": "playwright test",
+    "pw:open": "playwright test --ui",
+    "serve": "node scripts/serve-static.js",
+    "record": "node scripts/record.js",
+    "install:browsers": "playwright install --with-deps"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "playwright": "^1.59.1"
+  }
+}

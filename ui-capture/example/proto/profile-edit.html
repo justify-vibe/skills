@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thynco | Edit Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="./common.css">
+    <link rel="stylesheet" href="./user.css">
+</head>
+
+<body>
+    <div id="canvas-viewport">
+        <div class="mesh-bg"></div>
+        <div id="app-content">
+            <section id="profile-edit" class="stage active">
+                <header class="header">
+                    <div class="header-left">
+                        <button type="button" class="circle-btn" onclick="location.href='user.html'" aria-label="Back" style="margin-bottom: 8px;">
+                            <span class="material-icons">chevron_left</span>
+                        </button>
+                        <h1 class="header-title">Edit Profile</h1>
+                    </div>
+                </header>
+
+                <form class="profile-container" data-profile-form>
+                    <div class="google-card profile-form-card">
+                        <div class="profile-input-group">
+                            <label for="profile-name">Name</label>
+                            <input id="profile-name" class="profile-input" type="text" autocomplete="name" required data-profile-name>
+                        </div>
+                        <div class="profile-input-group">
+                            <label for="profile-email">Email</label>
+                            <input id="profile-email" class="profile-input" type="email" autocomplete="email" required data-profile-email>
+                        </div>
+                        <div class="profile-input-group">
+                            <label for="profile-avatar">Avatar URL</label>
+                            <input id="profile-avatar" class="profile-input" type="url" autocomplete="url" placeholder="https://..." data-profile-avatar>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="profile-primary-btn">
+                        <span class="material-icons">check</span>
+                        <span>Save</span>
+                    </button>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+
+</html>

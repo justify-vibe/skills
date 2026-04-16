@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thynco | Devices</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="./common.css">
+    <link rel="stylesheet" href="./devices.css">
+    <link rel="stylesheet" href="./assistant.css">
+</head>
+
+<body>
+    <div id="canvas-viewport">
+        <div class="mesh-bg"></div>
+        <div id="app-content">
+            <section id="devices" class="stage active devices-stage">
+                <header class="header">
+                    <div class="header-left">
+                        <button type="button" class="home-context-picker" data-home-picker-open aria-label="Switch home">
+                            <span data-home-name>Smart Home</span>
+                            <span class="material-icons">expand_more</span>
+                        </button>
+                        <h1 class="header-title">Devices</h1>
+                    </div>
+                    <div class="header-right">
+                        <button type="button" class="circle-btn" aria-label="Add device" data-nav-to="add-device.html">
+                            <span class="material-icons">add</span>
+                        </button>
+                    </div>
+                </header>
+
+                <div class="devices-search google-card">
+                    <span class="material-icons devices-search-icon">search</span>
+                    <input type="text" placeholder="Search devices, rooms, routines" aria-label="Search" data-devices-search>
+                </div>
+
+                <div class="devices-room-strip" data-room-strip>
+                    <!-- Dynamically populated -->
+                </div>
+
+                <div id="device-sections-container">
+                    <!-- Dynamically populated -->
+                </div>
+            </section>
+
+            <div class="sheet-overlay" data-sheet-overlay></div>
+            <div class="device-sheet" data-device-sheet aria-hidden="true">
+                <div class="device-sheet-surface">
+                    <div class="sheet-handle"></div>
+                    <div class="sheet-head">
+                        <div class="sheet-icon"><span class="material-icons" data-sheet-icon>devices</span></div>
+                        <div class="sheet-title">
+                            <h2 data-sheet-title>Device</h2>
+                            <p data-sheet-subtitle>—</p>
+                        </div>
+                        <button type="button" class="circle-btn sheet-full-btn" aria-label="Toggle full screen" data-sheet-fullscreen>
+                            <span class="material-icons" data-sheet-fullscreen-icon>fullscreen</span>
+                        </button>
+                        <button type="button" class="circle-btn sheet-close-btn" aria-label="Close details" data-sheet-close>
+                            <span class="material-icons">close</span>
+                        </button>
+                    </div>
+                    <div class="sheet-controls" data-sheet-controls></div>
+                </div>
+            </div>
+
+            <nav class="dock-container">
+                <div class="dock-item" data-id="home" onclick="location.href='index.html'">
+                    <div class="icon-container">
+                        <span class="material-icons">home</span>
+                    </div>
+                </div>
+                <div class="dock-item active" data-id="devices" onclick="location.href='devices.html'">
+                    <div class="icon-container">
+                        <span class="material-icons">grid_view</span>
+                    </div>
+                </div>
+
+                <div class="google-fab-wrapper">
+                    <button type="button" class="google-fab" data-assistant-open aria-label="Open AI Assistant">
+                        <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2L14.3 9.7L22 12L14.3 14.3L12 22L9.7 14.3L2 12L9.7 9.7L12 2Z"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="dock-item" data-id="settings" onclick="location.href='settings.html'">
+                    <div class="icon-container">
+                        <span class="material-icons">settings</span>
+                    </div>
+                </div>
+                <div class="dock-item" data-id="user" onclick="location.href='user.html'">
+                    <div class="icon-container">
+                        <span class="material-icons">person</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+
+</html>

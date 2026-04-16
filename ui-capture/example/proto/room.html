@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thynco | Room</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="./common.css">
+    <link rel="stylesheet" href="./room.css">
+</head>
+
+<body>
+    <div id="canvas-viewport">
+        <div class="mesh-bg"></div>
+        <div id="app-content">
+            <section id="room" class="stage active">
+                <header class="sub-bar">
+                    <button type="button" class="circle-btn" onclick="location.href='index.html'">
+                        <span class="material-icons">chevron_left</span>
+                    </button>
+                    <div class="sub-bar-title">
+                        <h4 data-room-name-title>Living Room</h4>
+                    </div>
+                    <div class="sub-bar-spacer"></div>
+                </header>
+
+                <div class="devices-search google-card">
+                    <span class="material-icons devices-search-icon">search</span>
+                    <input type="text" placeholder="Search in this room" aria-label="Search" data-room-devices-search>
+                </div>
+
+                <div class="room-devices-container">
+                    <div class="sec-label">
+                        <h3>DEVICES</h3>
+                    </div>
+                    <div class="unit-grid" data-room-devices-list>
+                        <!-- Devices will be populated here -->
+                    </div>
+                </div>
+            </section>
+
+            <div class="sheet-overlay" data-sheet-overlay></div>
+            <div class="device-sheet" data-device-sheet aria-hidden="true">
+                <div class="device-sheet-surface">
+                    <div class="sheet-handle"></div>
+                    <div class="sheet-head">
+                        <div class="sheet-icon"><span class="material-icons" data-sheet-icon>devices</span></div>
+                        <div class="sheet-title">
+                            <h2 data-sheet-title>Device</h2>
+                            <p data-sheet-subtitle>—</p>
+                        </div>
+                        <button type="button" class="circle-btn sheet-close-btn" aria-label="Close details" data-sheet-close>
+                            <span class="material-icons">close</span>
+                        </button>
+                    </div>
+                    <div class="sheet-controls" data-sheet-controls></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="./devices.css">
+    <script src="./app.js"></script>
+    <script>
+        (() => {
+            const listContainer = document.querySelector('[data-room-devices-list]');
+            const titleEl = document.querySelector('[data-room-name-title]');
+            const searchInput = document.querySelector('[data-room-devices-search]');
+            
+            if (!listContainer) return;
+
+            const params = new URLSearchParams(location.search);
+            const roomId = params.get('id') || 'r1'; // Default to r1 if not specified
+            
+            const render = (query = '') => {
+                const home = HomeManager.getHome(HomeManager.getActiveId());
+                if (!home) return;
+
+                const room = home.rooms.find(r => r.id === roomId) || home.rooms[0];
+                if (titleEl && room) titleEl.textContent = room.name;
+
+                const devices = home.devices.filter(d => d.room === (room?.id || roomId));
+                const filtered = devices.filter(d => 
+                    !query || d.name.toLowerCase().includes(query.toLowerCase()) || d.type.toLowerCase().includes(query.toLowerCase())
+                );
+
+                listContainer.innerHTML = filtered.map(d => {
+                    const isOn = d.status.toLowerCase() !== 'off' && d.status !== '0';
+                    return `
+                        <div class="unit-tile google-card ${isOn ? 'active' : ''}" data-device-id="${d.id}">
+                            <div class="unit-top">
+                                <div class="unit-icon">
+                                    <span class="material-icons">${getIcon(d.type)}</span>
+                                </div>
+                                <div class="md3-switch ${isOn ? 'on' : ''}"></div>
+                            </div>
+                            <div class="unit-bottom">
+                                <h4>${d.name}</h4>
+                                <p>${d.status}${d.type === 'light' ? '%' : (d.type === 'climate' ? '°C' : '')}</p>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                // Attach events
+                listContainer.querySelectorAll('.unit-tile').forEach(tile => {
+                    const id = tile.dataset.deviceId;
+                    const device = devices.find(d => d.id === id);
+                    
+                    tile.querySelector('.md3-switch').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const nextOn = !e.currentTarget.classList.contains('on');
+                        HomeManager.updateDevice(home.id, id, { 
+                            status: nextOn ? (device.type === 'light' ? '80' : (device.type === 'climate' ? '24' : 'On')) : 'Off' 
+                        });
+                        render(searchInput.value);
+                    });
+
+                    tile.addEventListener('click', () => {
+                        // Open sheet logic if needed, but for now just toggle
+                    });
+                });
+            };
+
+            const getIcon = (type) => {
+                switch(type) {
+                    case 'light': return 'lightbulb';
+                    case 'media': return 'tv';
+                    case 'climate': return 'thermostat';
+                    default: return 'devices';
+                }
+            };
+
+            searchInput?.addEventListener('input', (e) => render(e.target.value));
+            
+            window.addEventListener('thynco_home_changed', () => render());
+            render();
+        })();
+    </script>
+</body>
+
+</html>

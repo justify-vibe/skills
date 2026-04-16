@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thynco | Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="./common.css">
+    <link rel="stylesheet" href="./user.css">
+    <link rel="stylesheet" href="./assistant.css">
+</head>
+
+<body>
+    <div id="canvas-viewport">
+        <div class="mesh-bg"></div>
+        <div id="app-content">
+            <section id="user" class="stage active">
+                <header class="header">
+                    <div class="header-left">
+                        <div class="header-subtitle">Account</div>
+                        <h1 class="header-title">Profile</h1>
+                    </div>
+                </header>
+
+                <div class="profile-container">
+                    <div class="google-card profile-hero-card">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200&h=200"
+                            alt="Alex Johnson" class="profile-avatar" data-user-avatar>
+                        <div class="profile-info">
+                            <h2 class="profile-name" data-user-name>Alex Johnson</h2>
+                            <p class="profile-email" data-user-email>alex.johnson@thynco.ai</p>
+                        </div>
+                    </div>
+
+                    <div class="sec-label">
+                        <h3>ACCOUNT</h3>
+                    </div>
+
+                    <div class="google-card profile-group">
+                        <button type="button" class="profile-item" onclick="location.href='profile-edit.html'">
+                            <div class="profile-item-icon">
+                                <span class="material-icons">edit</span>
+                            </div>
+                            <div class="profile-item-content">
+                                <h4>Edit Profile</h4>
+                                <p>Update your name, email, avatar</p>
+                            </div>
+                            <span class="material-icons profile-chevron">chevron_right</span>
+                        </button>
+                        
+                        <button type="button" class="profile-item" onclick="location.href='home-management.html'">
+                            <div class="profile-item-icon">
+                                <span class="material-icons">home_work</span>
+                            </div>
+                            <div class="profile-item-content">
+                                <h4>Home Management</h4>
+                                <p>Homes, rooms, members</p>
+                            </div>
+                            <span class="material-icons profile-chevron">chevron_right</span>
+                        </button>
+                    </div>
+
+                    <div class="sec-label">
+                        <h3>SETTINGS</h3>
+                    </div>
+
+                    <div class="google-card profile-group">
+                        <div class="profile-item is-static">
+                            <div class="profile-item-icon">
+                                <span class="material-icons">verified_user</span>
+                            </div>
+                            <div class="profile-item-content">
+                                <h4>Plan</h4>
+                                <p>Pro Member</p>
+                            </div>
+                            <div class="profile-status-pill">Active</div>
+                        </div>
+
+                        <button type="button" class="profile-item" onclick="location.href='settings.html'">
+                            <div class="profile-item-icon">
+                                <span class="material-icons">settings</span>
+                            </div>
+                            <div class="profile-item-content">
+                                <h4>General Settings</h4>
+                                <p>App preferences & security</p>
+                            </div>
+                            <span class="material-icons profile-chevron">chevron_right</span>
+                        </button>
+                    </div>
+
+                </div>
+            </section>
+
+            <nav class="dock-container">
+                <div class="dock-item" data-id="home" onclick="location.href='index.html'">
+                    <div class="icon-container">
+                        <span class="material-icons">home</span>
+                    </div>
+                </div>
+                <div class="dock-item" data-id="devices" onclick="location.href='devices.html'">
+                    <div class="icon-container">
+                        <span class="material-icons">grid_view</span>
+                    </div>
+                </div>
+
+                <div class="google-fab-wrapper">
+                    <button type="button" class="google-fab" data-assistant-open aria-label="Open AI Assistant">
+                        <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2L14.3 9.7L22 12L14.3 14.3L12 22L9.7 14.3L2 12L9.7 9.7L12 2Z"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="dock-item" data-id="settings" onclick="location.href='settings.html'">
+                    <div class="icon-container">
+                        <span class="material-icons">settings</span>
+                    </div>
+                </div>
+                <div class="dock-item active" data-id="user" onclick="location.href='user.html'">
+                    <div class="icon-container">
+                        <span class="material-icons">person</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+
+</html>

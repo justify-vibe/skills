@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thynco | Scenes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="./common.css">
+    <link rel="stylesheet" href="./scenes.css">
+    <link rel="stylesheet" href="./assistant.css">
+</head>
+
+<body>
+    <div id="canvas-viewport">
+        <div class="mesh-bg"></div>
+        <div id="app-content">
+            <section id="scenes" class="stage active">
+                <header class="header">
+                    <div class="header-left">
+                        <button type="button" class="home-context-picker" data-home-picker-open aria-label="Switch home">
+                            <span data-home-name>Smart Home</span>
+                            <span class="material-icons">expand_more</span>
+                        </button>
+                        <h1 class="header-title">Scenes</h1>
+                    </div>
+                    <div class="header-right">
+                        <button type="button" class="circle-btn scenes-add-btn" aria-label="Create scene" data-create-routine-open>
+                            <span class="material-icons">add</span>
+                        </button>
+                    </div>
+                </header>
+
+                <div class="scenes-search google-card">
+                    <span class="material-icons scenes-search-icon">search</span>
+                    <input type="text" placeholder="Search scenes" aria-label="Search scenes" data-scenes-search>
+                </div>
+
+                <div class="sec-label scenes-section-label" data-scenes-section="suggested-label">
+                    <h3>SUGGESTED</h3>
+                </div>
+
+                <div class="scene-grid" data-scenes-suggested>
+                    <button type="button" class="suggested-plaza-card suggested-plaza-card--presets google-card" onclick="location.href='suggested.html'">
+                        <span class="material-icons">view_carousel</span>
+                        <span class="suggested-plaza-text">Open presets</span>
+                        <span class="material-icons suggested-plaza-chevron">chevron_right</span>
+                    </button>
+                    <button type="button" class="suggested-plaza-card suggested-plaza-card--ai google-card" onclick="location.href='ai-routine.html'">
+                        <span class="material-icons">auto_fix_high</span>
+                        <span class="suggested-plaza-text">AI generate</span>
+                        <span class="material-icons suggested-plaza-chevron">chevron_right</span>
+                    </button>
+                </div>
+
+                <div class="sec-label scenes-section-label" data-scenes-section="personal-label">
+                    <h3>MY SCENES</h3>
+                    <span data-scenes-count>0</span>
+                </div>
+
+                <div class="scenes-list" data-scenes-list>
+                </div>
+
+                <div class="scenes-empty google-card is-hidden" data-scenes-empty>
+                    <div class="scenes-empty-icon">
+                        <span class="material-icons">auto_awesome</span>
+                    </div>
+                    <div class="scenes-empty-text">
+                        <h4>No scenes yet</h4>
+                        <p>Create your first automation in seconds.</p>
+                    </div>
+                    <button type="button" class="scenes-empty-cta" onclick="location.href='create-routine.html'"
+                        data-nav-to="create-routine.html">Create scene</button>
+                </div>
+
+                <div class="modal-overlay" data-create-routine-modal>
+                    <div class="modal-sheet create-scene-sheet">
+                        <div class="create-scene-sheet-head">
+                            <h3>Create scene</h3>
+                            <button type="button" class="circle-btn" aria-label="Close" data-create-routine-close>
+                                <span class="material-icons">close</span>
+                            </button>
+                        </div>
+                        <button type="button" class="create-scene-option" data-create-routine-manual>
+                            Manual
+                        </button>
+                        <button type="button" class="create-scene-option" data-create-routine-ai>
+                            AI generate
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <nav class="dock-container">
+                <div class="dock-item" data-id="home" onclick="location.href='index.html'">
+                    <div class="icon-container">
+                        <span class="material-icons">home</span>
+                    </div>
+                </div>
+                <div class="dock-item" data-id="devices" onclick="location.href='devices.html'">
+                    <div class="icon-container">
+                        <span class="material-icons">grid_view</span>
+                    </div>
+                </div>
+
+                <div class="google-fab-wrapper">
+                    <button type="button" class="google-fab" data-assistant-open aria-label="Open AI Assistant">
+                        <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2L14.3 9.7L22 12L14.3 14.3L12 22L9.7 14.3L2 12L9.7 9.7L12 2Z"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="dock-item" data-id="settings" onclick="location.href='settings.html'">
+                    <div class="icon-container">
+                        <span class="material-icons">settings</span>
+                    </div>
+                </div>
+                <div class="dock-item" data-id="user" onclick="location.href='user.html'">
+                    <div class="icon-container">
+                        <span class="material-icons">person</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+
+</html>

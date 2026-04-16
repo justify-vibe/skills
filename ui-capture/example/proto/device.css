@@ -1,0 +1,138 @@
+/* Device detail page specific styles */
+.device-stage {
+    padding-bottom: 48px;
+}
+
+.device-hero {
+    margin: 6px 20px 12px;
+    padding: 16px;
+    border-radius: 26px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.06);
+}
+
+.device-hero-top {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+.device-hero-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 18px;
+    background: rgba(0, 0, 0, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    flex-shrink: 0;
+}
+
+.device-hero-icon .material-icons {
+    font-size: 26px;
+}
+
+.device-hero-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.device-hero-info h1 {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.device-hero-info p {
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.device-controls {
+    padding: 8px 18px 20px;
+}
+
+.device-info-rows {
+    display: grid;
+    gap: 10px;
+}
+
+.device-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.device-info-label {
+    font-size: 12px;
+    font-weight: 900;
+    color: #80868b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.device-info-value {
+    font-size: 13px;
+    font-weight: 900;
+    color: var(--text-main);
+    letter-spacing: -0.01em;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.device-missing {
+    margin: 12px 20px 0;
+    padding: 18px;
+    border-radius: 26px;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.06);
+}
+
+.device-missing-title {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--text-main);
+}
+
+.device-missing-subtitle {
+    margin-top: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+.device-missing-btn {
+    margin-top: 14px;
+    width: 100%;
+    border: none;
+    border-radius: 20px;
+    padding: 14px 14px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 900;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    box-shadow: 0 16px 34px rgb(var(--primary-rgb) / 0.2), inset 0 2px 4px rgba(255, 255, 255, 0.22);
+}
+
+.device-missing-btn:active {
+    transform: scale(0.98);
+}

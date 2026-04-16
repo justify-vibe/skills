@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thynco | Setting Up</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="./common.css">
+    <style>
+        :root {
+            --primary: #007aff;
+            --accent: #5ac8fa;
+            --primary-rgb: 0, 122, 255;
+            --accent-rgb: 90, 200, 250;
+            --text-main: #1d1d1f;
+            --text-secondary: #86868b;
+        }
+
+        .setup-stage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 24px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .setup-orb-wrap {
+            width: 160px;
+            height: 160px;
+            position: relative;
+            margin-bottom: 48px;
+            filter: url(#goo);
+        }
+
+        .setup-orb {
+            position: absolute;
+            inset: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            box-shadow: 0 10px 40px rgba(var(--primary-rgb), 0.3);
+            animation: orbMorph 4s ease-in-out infinite alternate;
+        }
+
+        .setup-blob {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary);
+            opacity: 0.6;
+        }
+
+        .blob-1 { top: 20%; left: 20%; animation: blobMove1 8s ease-in-out infinite; }
+        .blob-2 { top: 40%; left: 50%; animation: blobMove2 10s ease-in-out infinite; background: var(--accent); }
+
+        @keyframes orbMorph {
+            0% { border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%; }
+            100% { border-radius: 60% 40% 40% 60% / 60% 60% 40% 40%; }
+        }
+
+        @keyframes blobMove1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(40px, 20px) scale(1.1); }
+        }
+
+        @keyframes blobMove2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-30px, -20px) scale(0.9); }
+        }
+
+        .setup-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+        }
+
+        .setup-sub {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            max-width: 260px;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            background: linear-gradient(135deg, #34c759, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 24px;
+            transform: scale(0);
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .success-icon.show {
+            transform: scale(1);
+        }
+
+        .setup-done-btn {
+            position: fixed;
+            bottom: 48px;
+            left: 24px;
+            right: 24px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            height: 60px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .setup-done-btn.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="canvas-viewport">
+        <div class="mesh-bg"></div>
+        <div id="app-content">
+            <section class="setup-stage">
+                <svg width="0" height="0" style="position:absolute;">
+                    <defs>
+                        <filter id="goo">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10" result="goo" />
+                        </filter>
+                    </defs>
+                </svg>
+
+                <div id="setup-view">
+                    <div class="setup-orb-wrap">
+                        <div class="setup-orb"></div>
+                        <div class="setup-blob blob-1"></div>
+                        <div class="setup-blob blob-2"></div>
+                    </div>
+                    <h2 class="setup-title" id="setup-name">Setting up...</h2>
+                    <p class="setup-sub">Adding your device to Thynco. This may take a few moments.</p>
+                </div>
+
+                <div id="success-view" style="display: none;">
+                    <span class="material-icons success-icon" id="success-icon">check_circle</span>
+                    <h2 class="setup-title">All set!</h2>
+                    <p class="setup-sub">Your device is now ready to use.</p>
+                </div>
+
+                <button type="button" class="sheet-primary-btn setup-done-btn" id="done-btn">Continue</button>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const name = params.get('name') || 'Device';
+        const setupName = document.getElementById('setup-name');
+        const setupView = document.getElementById('setup-view');
+        const successView = document.getElementById('success-view');
+        const successIcon = document.getElementById('success-icon');
+        const doneBtn = document.getElementById('done-btn');
+
+        setupName.textContent = `Setting up ${name}`;
+
+        setTimeout(() => {
+            setupView.style.display = 'none';
+            successView.style.display = 'block';
+            setTimeout(() => {
+                successIcon.classList.add('show');
+                doneBtn.classList.add('show');
+            }, 50);
+        }, 2500);
+
+        doneBtn.addEventListener('click', () => {
+            window.location.href = 'devices.html';
+        });
+    </script>
+</body>
+
+</html>

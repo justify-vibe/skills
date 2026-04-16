@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rooms - Thynco</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="./common.css">
+    <link rel="stylesheet" href="./rooms.css">
+</head>
+
+<body>
+    <div id="app-root">
+        <div id="canvas-viewport">
+            <section id="rooms-list" class="stage active">
+                <header class="sub-bar">
+                    <button type="button" class="circle-btn" onclick="location.href='index.html'">
+                        <span class="material-icons">chevron_left</span>
+                    </button>
+                    <div class="sub-bar-title">
+                        <h4>All Rooms</h4>
+                    </div>
+                    <button type="button" class="circle-btn">
+                        <span class="material-icons">add</span>
+                    </button>
+                </header>
+
+                <div class="rooms-expanded-container" data-rooms-grid>
+                    <!-- Rooms will be populated here -->
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+    <script>
+        (() => {
+            const grid = document.querySelector('[data-rooms-grid]');
+            if (!grid) return;
+
+            const render = () => {
+                const home = HomeManager.getHome(HomeManager.getActiveId());
+                if (!home) return;
+
+                const rooms = home.rooms;
+                const devices = home.devices;
+
+                grid.innerHTML = rooms.map(r => {
+                    const roomDevices = devices.filter(d => d.room === r.id);
+                    const activeDevices = roomDevices.filter(d => d.status.toLowerCase() !== 'off' && d.status !== '0');
+                    
+                    return `
+                        <div class="google-card room-list-item" onclick="location.href='room.html?id=${r.id}'">
+                            <div class="room-list-left">
+                                <div class="room-list-icon">
+                                    <span class="material-icons">${getRoomIcon(r.name)}</span>
+                                </div>
+                                <div class="room-list-info">
+                                    <h2 class="room-list-title">${r.name}</h2>
+                                    <p class="room-list-subtitle">${roomDevices.length} Devices</p>
+                                </div>
+                            </div>
+                            <div class="room-list-right">
+                                ${activeDevices.length > 0 ? `<div class="room-active-status">${activeDevices.length} ON</div>` : ''}
+                                <span class="material-icons room-list-chevron">chevron_right</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            };
+
+            const getRoomIcon = (name) => {
+                const n = name.toLowerCase();
+                if (n.includes('living')) return 'weekend';
+                if (n.includes('kitchen')) return 'kitchen';
+                if (n.includes('bed')) return 'bed';
+                if (n.includes('bath')) return 'bathtub';
+                if (n.includes('garage')) return 'garage';
+                if (n.includes('garden')) return 'park';
+                return 'room';
+            };
+
+            window.addEventListener('thynco_home_changed', render);
+            render();
+        })();
+    </script>
+</body>
+
+</html>

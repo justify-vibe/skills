@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thynco | Home Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="./common.css">
+    <link rel="stylesheet" href="./user.css">
+    <link rel="stylesheet" href="./devices.css">
+</head>
+
+<body>
+    <div id="canvas-viewport">
+        <div class="mesh-bg"></div>
+        <div id="app-content">
+            <section id="home-management" class="stage active profile-modern-stage">
+                <header class="header">
+                    <div class="header-left row">
+                        <button type="button" class="modern-back-btn" onclick="location.href='settings.html'">
+                            <span class="material-icons">arrow_back_ios</span>
+                        </button>
+                        <h1 class="header-title">Home Management</h1>
+                    </div>
+                </header>
+
+                <nav class="modern-settings-container">
+                    <div class="settings-group-modern">
+                        <h3 class="group-label-modern">Your Homes</h3>
+                        <ul class="modern-card-list google-card" data-home-list>
+                            <!-- Dynamically populated -->
+                        </ul>
+                    </div>
+
+                    <button type="button" class="modern-logout-btn" style="color: var(--primary); border-color: var(--primary-container); background: var(--primary-container);" onclick="location.href='add-home.html'">
+                        <span class="material-icons">add_home</span>
+                        Create New Home
+                    </button>
+                </nav>
+            </section>
+        </div>
+
+        <!-- Edit Home Modal -->
+        <div class="modal-overlay" data-edit-modal aria-hidden="true">
+            <div class="modal-sheet">
+                <div class="modal-head">
+                    <button type="button" class="circle-btn" data-modal-close style="background: rgba(0,0,0,0.04); box-shadow: none; width: 40px; height: 40px;">
+                        <span class="material-icons" style="font-size: 20px;">close</span>
+                    </button>
+                    <h2 class="modal-title">Home Settings</h2>
+                    <button type="button" class="modal-btn modal-btn--primary" data-save-home style="flex: 0 0 auto; padding: 8px 16px; border-radius: 12px; font-size: 14px; height: 40px; box-shadow: none;">Save</button>
+                </div>
+                <div class="modal-body">
+                    <!-- Home Identity -->
+                    <div class="modal-group">
+                        <div class="modal-group-title">General</div>
+                        <div class="modal-input-group">
+                            <label>Home Name</label>
+                            <input type="text" class="modal-input" data-edit-name placeholder="Home Name">
+                        </div>
+                        <div class="modal-input-group">
+                            <label>Acting As (Preview)</label>
+                            <select class="modal-select" data-actor-member></select>
+                            <div class="modal-list-sub" style="margin-top: 4px; padding-left: 4px;" data-actor-hint></div>
+                        </div>
+                    </div>
+
+                    <!-- Location with Map Picker -->
+                    <div class="modal-group">
+                        <div class="modal-group-title">Location</div>
+                        <div class="map-picker-container" data-map-picker>
+                            <div class="map-picker-bg" data-map-bg></div>
+                            <div class="map-picker-grid"></div>
+                            <div class="map-pin">
+                                <span class="material-icons" style="font-size: 32px;">location_on</span>
+                            </div>
+                        </div>
+                        <div class="modal-row">
+                            <div style="flex: 1;">
+                                <label style="font-size: 11px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase;">Latitude</label>
+                                <input type="number" class="modal-input" data-edit-lat placeholder="0.000" step="any" inputmode="decimal" style="padding: 10px 12px; font-size: 13px;" />
+                            </div>
+                            <div style="flex: 1;">
+                                <label style="font-size: 11px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase;">Longitude</label>
+                                <input type="number" class="modal-input" data-edit-lng placeholder="0.000" step="any" inputmode="decimal" style="padding: 10px 12px; font-size: 13px;" />
+                            </div>
+                        </div>
+                        <div class="modal-list-sub" style="padding-left: 4px;">Tap the map to set location</div>
+                    </div>
+
+                    <!-- Rooms Management -->
+                    <div class="modal-group">
+                        <div class="modal-group-title">Rooms</div>
+                        <ul class="modal-list" data-room-list></ul>
+                        <div class="modal-row" style="margin-top: 4px;">
+                            <input type="text" class="modal-input" data-new-room placeholder="New room name" style="flex: 1;">
+                            <button type="button" class="circle-btn" style="background: var(--primary); color: white; width: 48px; height: 48px;" data-add-room>
+                                <span class="material-icons">add</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Members & Permissions -->
+                    <div class="modal-group">
+                        <div class="modal-group-title">Family Members</div>
+                        <ul class="modal-list" data-member-list></ul>
+                        
+                        <div class="modal-input-group" style="margin-top: 8px;">
+                            <label>Invite New Member</label>
+                            <div class="modal-row">
+                                <input type="text" class="modal-input" data-new-member-name placeholder="Name" style="flex: 1;">
+                                <select class="modal-select" data-new-member-role style="width: 110px;">
+                                    <option value="guest">Guest</option>
+                                    <option value="member">Member</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                                <button type="button" class="circle-btn" style="background: var(--primary); color: white; width: 48px; height: 48px;" data-add-member>
+                                    <span class="material-icons">person_add</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="modal-input-group" data-transfer-row style="border-top: 1px solid rgba(0,0,0,0.05); pt: 16px; margin-top: 8px;">
+                            <label>Transfer Ownership</label>
+                            <div class="modal-row">
+                                <select class="modal-select" data-transfer-target style="flex: 1;"></select>
+                                <button type="button" class="modal-btn modal-btn--outline" data-transfer-owner style="flex: 0 0 auto; padding: 12px 20px; font-size: 14px;">Transfer</button>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="modal-btn modal-btn--danger" style="margin-top: 8px; background: rgba(239, 68, 68, 0.05);" data-leave-home>
+                            <span class="material-icons" style="font-size: 20px;">logout</span>
+                            Leave Home
+                        </button>
+                    </div>
+                    
+                    <!-- Destructive Actions -->
+                    <div style="margin-top: 20px; padding: 0 4px;">
+                        <button type="button" class="modal-btn modal-btn--danger" style="background: rgba(239, 68, 68, 0.03); color: #EF4444; border: 1px dashed rgba(239, 68, 68, 0.2);" data-delete-home>
+                            <span class="material-icons" style="font-size: 20px;">delete_outline</span>
+                            Delete Home
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const list = document.querySelector('[data-home-list]');
+            const modal = document.querySelector('[data-edit-modal]');
+            const closeBtn = document.querySelector('[data-modal-close]');
+            const editNameInput = document.querySelector('[data-edit-name]');
+            const editLatInput = document.querySelector('[data-edit-lat]');
+            const editLngInput = document.querySelector('[data-edit-lng]');
+            const actorSelect = document.querySelector('[data-actor-member]');
+            const actorHint = document.querySelector('[data-actor-hint]');
+            const roomList = document.querySelector('[data-room-list]');
+            const newRoomInput = document.querySelector('[data-new-room]');
+            const addRoomBtn = document.querySelector('[data-add-room]');
+            const newMemberNameInput = document.querySelector('[data-new-member-name]');
+            const newMemberRoleSelect = document.querySelector('[data-new-member-role]');
+            const addMemberBtn = document.querySelector('[data-add-member]');
+            const transferRow = document.querySelector('[data-transfer-row]');
+            const transferTarget = document.querySelector('[data-transfer-target]');
+            const transferBtn = document.querySelector('[data-transfer-owner]');
+            const leaveBtn = document.querySelector('[data-leave-home]');
+            const saveBtn = document.querySelector('[data-save-home]');
+            const deleteBtn = document.querySelector('[data-delete-home]');
+            
+            const mapPicker = document.querySelector('[data-map-picker]');
+            const mapBg = document.querySelector('[data-map-bg]');
+            
+            let editingHomeId = null;
+
+            if (!list || !window.HomeManager) return;
+
+            // Mock Map Picker Logic
+            const updateMapUI = (lat, lng) => {
+                if (!mapBg) return;
+                const zoom = 12;
+                // Using a slightly more realistic mock URL that doesn't actually need a real key for a prototype UI
+                mapBg.style.backgroundImage = `url('https://api.mapbox.com/styles/v1/mapbox/light-v10/static/${lng},${lat},${zoom}/400x200?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ==')`;
+            };
+
+            mapPicker?.addEventListener('click', (e) => {
+                const rect = mapPicker.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width;
+                const y = (e.clientY - rect.top) / rect.height;
+                
+                // Map coordinates from click (very rough mock)
+                const baseLat = Number(editLatInput.value) || 37.789;
+                const baseLng = Number(editLngInput.value) || -122.401;
+                
+                const newLat = (baseLat + (0.5 - y) * 0.1).toFixed(4);
+                const newLng = (baseLng + (x - 0.5) * 0.1).toFixed(4);
+                
+                editLatInput.value = newLat;
+                editLngInput.value = newLng;
+                updateMapUI(newLat, newLng);
+            });
+
+            const render = () => {
+                const homes = window.HomeManager.getHomes();
+                list.innerHTML = homes.map(h => `
+                    <li>
+                        <div class="modern-list-item">
+                            <span class="item-icon-modern icon-purple">
+                                <span class="material-icons">home</span>
+                            </span>
+                            <span class="item-content-modern">
+                                <h4>${h.name}</h4>
+                                <p>${h.rooms?.length || 0} Rooms â€¢ ${h.members?.length || 0} Members</p>
+                            </span>
+                            <button type="button" class="circle-btn" style="background: rgba(0,0,0,0.05); color: #666;" onclick="openEditModal('${h.id}')">
+                                <span class="material-icons" style="font-size: 18px;">edit</span>
+                            </button>
+                        </div>
+                    </li>
+                `).join('');
+            };
+
+            const getHome = () => editingHomeId ? window.HomeManager.getHome(editingHomeId) : null;
+            const can = (action) => {
+                const home = getHome();
+                if (!home) return false;
+                return window.HomeManager.can(home.id, action);
+            };
+
+            const syncPermissionUI = (home) => {
+                const canEditHome = window.HomeManager.can(home.id, 'home:edit');
+                const canDeleteHome = window.HomeManager.can(home.id, 'home:delete');
+                const canManageRooms = window.HomeManager.can(home.id, 'room:manage');
+                const canInvite = window.HomeManager.can(home.id, 'member:invite');
+                const canTransfer = window.HomeManager.can(home.id, 'member:transfer');
+
+                if (editNameInput) editNameInput.disabled = !canEditHome;
+                if (editLatInput) editLatInput.disabled = !canEditHome;
+                if (editLngInput) editLngInput.disabled = !canEditHome;
+                if (saveBtn) saveBtn.disabled = !canEditHome;
+
+                if (newRoomInput) newRoomInput.disabled = !canManageRooms;
+                if (addRoomBtn) addRoomBtn.disabled = !canManageRooms;
+
+                if (newMemberNameInput) newMemberNameInput.disabled = !canInvite;
+                if (newMemberRoleSelect) newMemberRoleSelect.disabled = !canInvite;
+                if (addMemberBtn) addMemberBtn.disabled = !canInvite;
+
+                if (deleteBtn) deleteBtn.disabled = !canDeleteHome;
+                if (transferRow) transferRow.style.display = canTransfer && (home.members || []).length > 1 ? 'flex' : 'none';
+
+                if (leaveBtn) {
+                    const actor = window.HomeManager.getActorMember(home.id);
+                    leaveBtn.disabled = (actor?.role || '').toString().toLowerCase() === 'owner';
+                }
+            };
+
+            const renderActor = (home) => {
+                if (!actorSelect) return;
+                const members = home.members || [];
+                const actorId = window.HomeManager.getActorMemberId(home.id);
+                actorSelect.innerHTML = members.map(m => {
+                    const label = `${m.name} (${(m.role || '').toString()})`;
+                    const selected = m.id === actorId ? 'selected' : '';
+                    return `<option value="${m.id}" ${selected}>${label}</option>`;
+                }).join('');
+
+                const actor = window.HomeManager.getActorMember(home.id);
+                if (actorHint) {
+                    const roleLabel = window.Permissions?.labelForRole?.(actor?.role) || (actor?.role || 'guest');
+                    const deny = [];
+                    if (!window.HomeManager.can(home.id, 'home:edit')) deny.push('Home edit');
+                    if (!window.HomeManager.can(home.id, 'room:manage')) deny.push('Roïmó');
+                    if (!wiîdow.HomeManagår.cán(homå.id, §member:inviôe')) äeny®push('Memâeòs§);
+                    áctorHinô.ôextContent ½ deny.lengtè ¿ `${rïleLabel} â€¢ Limiôed: $ûdåny.êoin(', §)}` : `${òoleLaâel} â€¢ Fulì acceósà;Š                }
+            }»
+
+            wéndow.opånÅditModal = ¨iä) => {
+                const home = wéndow.ÈoíeManager.çeôHome(id);Š                if (!home) return;
+                editingHïmåId ½ id;
+                ådétNameInput.öalue ½ hoíe.name;Š                if (editLátInðuô) eäitLatÉnput.öaìuå ½ Numbår®isFénite(home®lát) ? hoíe®lát : '';Š                if (ediôLngÉnput) eäitLîgInpuô.öaìuå = Nuíber.isFinitå(èoíe.lng) ? èoíe.lng : '';Š                
+                õpäaôeMapUI(èoíe.lat |ü 37®789, hoíe®lng || -122.4°1©;
+
+                reîdårActoò(èome);
+                rånäeòRooms(homå);
+                reîderMemberó(hoíe);
+                syncPåríisséonUI(èome);Š                mïdal.cìaósList.add('acôive');
+            };Š
+            coîst renderÒooms = (home) =¾ û
+                ãoîsô allow ½ ÷indow.HomeManágår.can(hïme.id, 'rooí:íanage');
+                roomLiót.iînerHTML = (èoíe.rooís || Û]).map(ò => `
+                    <ìi claós="íodal-liót­iteí">
+                        <spaî ãlass="mïdál­list-name">${ò.nameý</sðan>
+         0              <buttïn tùpe="butôoî" cìass½"ciòcìe-btn¢ stylå="color: £EÆ4444;" onãlick="råmïvåRoom('$ûr®id}')" ${alìow ¿ '' : 'äióaâled'}>
+                            <span ãlass=¢máterial-écons" styìe½"æont-sézå: 1¸px;">äeleôe¼/span¾
+                        </âutton>
+                    </li¾
+                à).join(§'©;Š            };
+
+            const rånderMåmâers = (hoíe© ½> {
+                const membeòLésô = docuíeît®qõerySeìeãtïr('[datá-member-lisô]§);
+                consô álìwRolå = window.HïmeMánager.can¨hïme.id, §måmber:role');
+                const állowRemovå = wiîdïw.HïmeMánager.cán¨homå.id, §måmâer:remove')»
+                coîsô álìowTransæeò = windïw®Hïmå]anager®can(home.éd¬ §måmber:ôránófår');
+                meíberÌist.innerHTÍL = (èoíe®members |ü []).map(m => `Š     0              <li class½"íodal-list-iôem"¾
+                        <div claós½"modaì-list-info"¾
+                            ¼span clásó=¢modal-list-name">${í.îame}</spaî>
+                            <spán cìaós="modaì-ìiót-sub¢>¤{m.role}</spaî>
+                        </div>
+ 0                      ¼dév class½"modal-òow"¾
+                            ¼selecô ãlasó="modal­sålect" styìe½"÷idth: 140px;" oncèange=¢changåMåmbeòRole('${m.id}', this.value)" ${allo÷Role ¦& (m.òole || §'©.ôoStriîg().tïLowerCaóe¨) !== 'owîer' ? '' º §disábled'ý>
+                                <option valõe½"ïwner" ${(í.òoìe || '').ôoString¨)®toLïwerCase¨) =½= 'owîeò' ? 'seleãtåd' : ''}>owner</option>
+                                <opôion valu%½"ádíiî" ${(m.roìe || ''©.ôoString()®tïLowerCase¨) =½= 'admin' ? 'óeìecded§ : ''}>admiî<¯option>Š                                <option válue="íeíbår¢ ${(m®role ü| &').tïString().toLoweòCase(© ==½ §membeò' ? 'óelected§ : ''ý>member</optiïn>
+                                ¼option value="gueót¢ ${(m.rolå || '').toStrinç(©.toLoweòCáså() === 'gõeót' ? §selåcôed' : ''}>gõest</ïpôion¾
+                            </óeleãt>
+                            ¼bõtton type½"âutton" class=¢cérclå-âtî" style="coìor: #EF4444»" onclick="removeMember¨'¤{m.id}')" ${allowReíoöe && (m.rolå ü| '').toSôréng().toLo÷eòCase(© !== 'owner' ¿ '' : 'disaâled'}>
+                                <span ãlass=¢materéal-icïns" style="font-size: 18px;">ðerson_remove</sðaî>
+                            <¯bõtôon>
+                            <button tùpe=¢button" cìass="circìe-btn" stylå="background: rçbá(0,0,°,0.05©; colïrº #666;" oîcìick½"transferOwner('$ûm®id}')" ${állowTòansfeò ¦& (m.role || §'©.toStòing().toLowårÃaóe() !== 'owner' ? '§ º §désabled'ý>Š                                <ópán class½"íateòial-icons" style="fonô-size: ±8px»"¾workspaceßpreíium¼/spán>
+                            </âuôton>
+                        </div>Š                    <¯lé>Š                `).joén('§);
+
+                if ¨tòansferTargeô) {
+                    const o÷nårId = (home.members || Û]).find¨x =¾ (x.rolå || '§).toSôrénç().toLowerCáså() ==½ 'o÷ner')?.éd |ü '';
+                    ôransfårÔarget.innårHTML = (hoíe®måmbers |ü []).filter(m => m.ï¿½d !o¿½=o¿½ownerÉdïï¿½o¿½.o¿=aï¿=(ï¿½ ï¿=>oï?½½`ï¿½ooï¿½o¿½tioî vao¿==uoï¿½ï?½=oo¿½ï¿½¤ï¿½½m.iä}oï?½ï¿½>${ï¿½.ï¿½ao¿=e}<ï¿=oï¿½tï¿½oï¿=>`)®jo¿½ioï?½o¿=(''ï¿½=»
+ ï?½   ï¿½= ïï?½= ï¿½     ï¿=}ï¿½ ï¿=     ï¿½ ï¿=  }»
+
+   ï¿½ o¿½ oï¿½o¿=   oï¿½ï¿½winï¿=oï¿½.reo¿=oo¿½eRoïmï¿==o¿½=(rïï?½mIä) ï¿½¾ï?½={o¿½         ï¿½ ï¿=   o¿=cï¿½no¿=t hï¿½mï¿½ o¿½ çetHomo¿=(o¿½=;ï¿½   ï?½½ oï¿½o¿= o¿=       o¿==if (!ï¿½omeï?½ reï?½=urnïï¿½ï¿½
+    o¿½=   ï?½   ï¿½ ï¿½ wénäï¿½w.Hoíï¿½Mï¿½nï¿½çoï¿½=rï¿½=removïï¿½=Room(èomeï¿½iïï?½½, rï¿½oï¿=Id)»
+ï¿½0    ï¿½ ï¿½ o¿½ ïï¿½o¿½ o¿½ ï¿=oï¿½st neo¿==tï¿½½oï¿=ï¿½gï¿½tHoï?½å()ï¿½
+        ï¿½½ ïï¿½o¿¼ ï¿½= oï¿½= ï¿½f (!îoï¿==xoo¿½=©ï¿½rï¿½ôuòï?½»ï?½= ï¿½         oï¿½o¿ ï¿½  råndeo¿½Rï¿½oïï¿½=s(nexô)»
+oï?½ï¿½   ï¿==   ï¿½   ï?½;ï?½=
+          ïï¿½ï¿= oï?½ï¿½ddRo¿½oï¿=Bï¿½no¿½=áï?½dEvenï¿½Lï¿½soï¿½=åï¿½er('cï?½éck', () =>oï¿½ï¿½{
+ ï?½½ o¿½ ï¿½         ï¿½cïnï¿½t nï¿½me ï¿½ o¿½ewRooo¿½=Iï¿½=põt®6ï¿=lueï¿=tòií(©;ï¿½   o¿=        $ïï¿½ï¿½ ï¿=iæ ï¿½=!ï¿½amåï?½ ï¿½eoï¿½ï?½õrn;
+ï?½ oo¿== ï¿½   ï¿½  (ï¿½ ï¿½ ï?½oï¿½½sô èoíeï¿½=ïï?½ï¿½go¿½to¿=oï%¨)ï¿½
+  o¿= ï¿½ ï¿½ o¿=     ï¿= ïï¿½o¿½f (!hïï?½=mï¿½)o¿=reto¿½rï¿½;o¿=     ï¿=       oï¿½o¿=  wï¿½ndow.ï¿½=oï¿½eï?½aï?½aï¿½er.ï?½ädÒï¿½oï?½¨ï¿½oï¿½e.iï?½¬oï¿½={oo¿=ï¿½îamï¿½ ï?);
+      ï?½ ï?½=   o¿½   o¿½ewRooíInpo¿½tï¿=vo¿=lo¿½ï¿½ï¿½eo¿½==ï¿½§';
+   ï¿½ ï¿½ ï?½     ï¿½ ï¿½const nï¿½øt ï¿½ oo¿=ï¿½eï¿½Hï?½me¨ï¿½;
+ ï¿½½ ïï?½= oï¿½o¿=    ï¿½o¿½= oï¿½ï¿½  iï¿½ (!nextï?½ retuï¿½n;Š    oï¿½=   ï?½     oï¿== ï?½eï¿½derï?½oomoï¿½=¨ï?½eï¿½tï¿½;ï¿½ ï?½   ï?½ ï?½    ýï¿½½;ï¿½=
+ï?½       ï¿½½ ï¿= Oï?½ï¿=cïï?½o¿½orSelo¿½co¿½?.ao¿½dEvånï¿½=Lï¿½óoo¿½ï¿½ener¨ï¿½cï¿½ánçe§ï?½= ()ï¿½=¾ ï¿½
+  o¿= o¿=           o¿½oï¿=so¿= ï¿½omeo¿½= getoï¿½=oo¿==e();
+ï¿½   oï¿½ï¿½ ï¿½= o¿½ oï¿½ï¿=     ifoï¿½ï¿=(ï¿½hïme) rïï¿½=tõrn;o¿=   o¿½ ï¿½ o¿½ o¿½ ï¿½ ï¿=  constï¿=måmï¿½=erÉï?½ = (actoï¿½ï¿½rï¿½elect.öï¿½loï¿=ï¿½åï¿½|| ''ï?½®oï¿½=oï¿½ôréngï¿½);
+ï?½ ï¿½=   o¿=         ï¿½fï¿=(!memo¿½=erIï¿½) reôï?½rï¿½;ï¿½       ï¿½=   o¿= ï¿½=  ÷indoï¿½.Homeï¿½ánageï¿½.ï¿½åï¿½Acôï¿½zMeï?½bï?½òï¿½d(hï¿½moo¿½=.iä, måmâï¿½roï¿½=dï¿½;
+ ï¿½     ï?½ oï¿½ï?½   ï¿½  cï?½noo¿=ï¿½tï¿½nï?½=xï¿½ = geï¿=Hï¿½=me¨ï¿½»
+ ï¿½ oï¿½= ï¿½   oo¿==     ï¿½éf oo¿½ï¿½¡oï¿=ï¿½extï¿½ oo¿½=etuï?½îï?½Šï¿½ ï¿½       ï¿½ ï¿½   reï¿½9dï¿½=roï¿½ï¿½ãtïï¿½(ï¿½exô);
+ ï¿½ ï¿½ ï?½ ï¿½   ï?½= o¿½ ï¿½rïï?½ï¿½ndeï¿=Rïoms(nï¿½xoï¿½½)ï¿½
+        ï¿½ ï¿½ ï¿== ï¿½½ òendårï¿½eïï?½=bers(ï¿==eï?½toï¿½=»ï¿½  à  ï¿½ oï¿=ï?½    `  ï¿½sï¿½ncPoï¿==rï¿½iï¿½siïnÕoï¿½=(ï¿½eï?½t);
+ ï?½ oo¿½ï¿½     ï?½ ï¿½ýoo¿==;
+
+  ï¿½½     ï¿½ ï¿½ ádo¿==Memï¿½åo?½Boï¿½ï?½îï?½.adï?½Eveï¿½tï¿½éï?½ôï?½ner('cìï¿½½#ï¿½'çï?½= ¨) =ï¿= oï?½ï¿½
+  o¿= ïï?½ï¿½ o¿½`o¿½ ï¿½ ïï¿½½ o¿½ consô ï¿½omeï¿½==ï¿½=getï¿½=ome(©;
+ï¿½              0oï¿=ï¿½fï¿½¨!èï¿½=mï¿=)o¿=ro¿½turï¿½;Š"¤   ï¿½   oï?½ï¿½ o¿= o¿=  coï?½ï¿=no¿½tï¿=memâeòNoï¿½½moï¿½½ ï¿½ ï¿½no¿=wÍeoï¿½ï¿=bï¿½rNaï¿½=åInpuoo¿½ï¿½?.öï?½lue || ï?½'ï¿½.ï¿½ïStriï¿½goï¿=ï?½©ï¿½tï¿½½io¿½=()ï¿½
+ ï¿½= oï¿½ï¿½           ï¿=iï¿½ ¨!meíberï¿½aï¿½e© ï¿=
+ï¿½ ï¿½"o¿½ ïï¿½= o¿=   o¿½   ï¿½   îewMï¿½mâeï¿½Nï¿½måIîpo¿½t?.foãuo¿=?o¿=(ï¿½ oï?½o¿½revånôSãro¿½lï¿=:o¿==tï¿½=uïï¿½o¿= ý)ï¿½
+ï¿½ ï¿½ ï¿½         ï¿½= oï¿½ï¿½   reï¿½õï¿½n;
+oo¿½ï?½ ï¿½ ï?½   ï¿½     ï¿½= }
+  ï¿½   ï¿½       o¿½ ï¿½oï¿½so¿== ï¿½oleoo¿½ï¿½= (ï¿½åoï¿½=Mï?½íï¿½erRï¿½ìï¿½Óï?½lect¿.öï¿½ìoï¿½ï¿½å x| 'gueï?½½t§)o¿½toSï¿=roÿ½nï¿½(ï¿==»
+(    ï¿½ ï?½ oï¿½= ï¿½=   ï¿½wo¿=ndoïï¿½=.o¿½oíeMaï¿½ao¿=eï¿½.oï¿½ï¿½ddMï¿½mbeo¿=(ïï?½ï¿½oï¿½e.io¿½,oï?½o¿={ noï¿½=mï¿=:mï¿½ï¿½måmoï¿½ï¿½eo¿=Nï¿=mï¿½, rï¿=le });
+  ï¿½   ï¿½ o¿½ oï?½= ï¿=   o¿½foï¿½½(ï¿=eï¿½Mï¿=mïï¿½½erNamåInput© newMo¿==íï¿½erNaíeÉï?½putï¿½vï?½=lõeï¿½=o¿='';ï¿= oï?½½ oï¿½ï¿½ ï¿½ ï¿=       ï¿==conï¿½tï?½neøï¿½ oo¿½= ï¿½etHomï?½=();ï¿½    $    oï¿½½      iï¿½ ïï¿½=!nexpï¿½= retuï¿½n;Šï¿½ ï?½     ï¿½   oï¿½ï?½ ï?½ ï¿½eï¿½dï¿½òAcï¿½½or(neøtï¿½;o¿½=   ï¿½     ï?½ ï¿½ ï?½  òendeoï¿½=Meíï¿½eï¿½{ï?½nï?½øï¿½)ï¿½
+ï¿½ ï?½   ï¿½ oï¿== oï¿=ï¿½   oï¿½= synãï?½ermï¿½½soï?½ï¿½iïnUIo¿=nï¿½xô)»
+    ï¿½ ïï?½ï¿½ ï¿½ o¿½= ï¿½ï·½;
+ï¿½= o¿½= oï¿=ï¿½ oï¿½=    $ï¿½toï¿½=ansï¿½erBtnï¿½.addEveï?½ôLioo¿½=teîeò(§cliãï¿½'ï?½½ oï¿½ï¿½) =o¿= û
+ï¿= ï¿=   ï¿½ ïï¿½½  ï?½oï¿½o¿= ïï¿½ï¿½ ãoîso¿½ hoïï¿½=eï¿½=ï¿½=goï¿½ï¿½tHïmåoï¿=ï¿½)oï¿=ï¿½Š  ï¿½=   ï¿½ oï¿½o¿½   oï¿½ï¿= oï?½o¿½ if (ï¿½homï¿½)o¿½rï¿=turï¿½;Š o¿½ ï¿½ ï¿½ ï¿½     ï¿= o¿==cï¿½îsô tï¿½roï¿½ï¿½åtIï¿½ ï¿½ oï¿=ï¿½pï?½aï?½soï¿½ï?½åï¿½Ôargeï?½?.voo¿½=lï?½åï?½üoï¿½= oï¿½ï?½').tïSôï¿½éï¿½g();
+ï¿½ ï¿½ ï¿½   ï?½ ï¿½½ ïï¿½ï¿½   ifï¿½(oï¿½ï¿=to¿=rï¿½eï¿=Io¿½)ï¿½rï¿½=tï¿½òï¿½;
+   oï¿=ï¿½ ï?½ ï¿½ ï¿½=     ï¿=ioï¿½= ï¿½!ïï¿½ï¿½oîfiro¿½(oï¿½½Tïï¿½ï¿½`ï¿=sæeò oï¿½ï¿½wneï¿=sï¿½=ip¿ï¿½)ï¿½= òeo¿½urn;
+o¿½ ï¿½ ï¿½   o¿½=   ï¿½   ï?½éndoï¿½=ï¿½ï?½Homï¿½=Mo¿½nager®traï¿½sï¿½eÏ¿ï¿=Oï¿½nershï¿½p(hï¿½mï¿=.ï¿=d, ï¿==áï¿½çoï¿½ï¿½tï?½äï¿½;
+ oï¿½ï¿½ ï¿½ ï?½ ï?½       oo¿½ï¿½cï?½nstï¿½nï¿½øoï¿== ï¿½ geï¿½Hï?½mï¿½¨)»ï¿½ ï¿½ ï¿½     ï¿½= o¿½    if ï¿½!neoï¿½=t) òeôuo¿==nï¿½
+      ï¿½ oo¿½=   ï¿½ ï?½ ï?½åndï?½rï¿½ãoo¿½ï¿½ooï¿=ï?½(neï¿½tï?½»
+ ï¿½     ï¿½ oo¿½=   ï?½  òï¿½ndeï?½Íembeoï¿==sï¿½îext);Šï?½ oo¿½=     ï¿½½   ï¿½   syîbï¿½eòmï¿=sïï¿½ï¿=iïnï¿Iï¿½noï?½½xt)»
+    oï?½=   ï¿= ïï?½ï¿½ });
+Š oï¿½ï¿½ o¿½ ï¿=   ï¿= o¿=lo¿½aveBtn?.addï¿½=öï?½îï¿½Listånåoï¿½=(oï¿½=cï?½iï¿½kï?½¬ï?½½(ï¿½ ï¿=>k¿½{ï¿½   oï¿½= ï¿½ o¿=       oï?½o¿½cïnï¿½tï¿½=hï¿½ï¿½e oï¿=ï?½ ï¿½åï?½Hï¿½me(ï?½;oo¿½ï¿½ oo¿½ï¿½ ï¿½ ï¿½ ï¿½ ï¿½   ï?½½  ioï¿½½ (!èoï¿½eoï¿½o¿½ ïï¿½=eo¿½=uï¿½n;
+oï¿=ï?½   ï¿½ oï¿== ï¿½   ï?½ ï¿½ ifoo¿=ï¿½¨!cooï?½½iï¿=mï¿½'ï¿½eavï¿½ oï¿½ï¿½hï¿½sï¿½=hoï¿½ï¿½me?'ï¿=oï¿½ï¿½ ï?½åturn;
+ï¿½ oo¿½= ï¿½   oo¿½ï¿½     ï?½ window.Hoíoï¿½=Mï?½=no¿½ger.lï¿=ao¿==eï¿½ïmeï?½½homï¿==¯iä);ï¿½ ï¿½ ï¿½  ï¿½ï¿½ ï?½ ï¿½ ï?½  moo¿½=dAì.ãï¿½ássLiï?½ô.òeíovoï¿½=¨oï¿½=aï¿½ôï¿½ve');oï¿=ï¿½ ï?½ oï¿=ï?½     ï¿½½ o¿½ ïï¿½ï¿½  ro¿=ndeï¿½(ïï?½ï¿½;
+     ï¿½ oï¿½o¿½ ï¿== ï¿½ýï?½;ï¿½
+  ï?½ oï¿½ï¿½ ï¿½ ï¿½=   ï¿½iïï?½o¿½dow¾cï¿=aîgeMemo¿½eïï?½ï¿½Rï¿½lå ½ (mï¿½mo¿=eï¿½Iï¿=,ï¿=rï¿½lï¿=)ï¿½=¾ {
+  ï¿== oï¿½ï¿½ ïÿ½ oï¿½ï¿½ ï?½   ï¿½ conóï¿½ï¿½= ï?½ïï¿½åï¿½== gåtï¿½=omå()ï¿½
+  ï¿½ ï¿½=   o¿= oï¿½ï¿=   ï¿½ oï¿½=fo¿½(o¿½hoï?½o¿=moï¿½ï¿½)oï?½=retï¿½rï¿=;oï¿½ï¿=     o¿= ï¿= o¿½ o¿½ ï¿½= ï?½÷inï¿½ïw®ï?½oï¿½eï?½ánagår®oï¿=ï¿½pdqï¿½eï¿½åï?½âeòRoleï¿½èï¿½ma.idoo¿=ï¿½ oï¿=ï?½åï¿½=bï¿=rId, o¿½oï¿½eoï¿½ï¿½;ï¿½= ï¿½   oï¿=ï?½ ï¿½= oï?½= o¿½ ï¿½  cï¿=nï¿½toï?½o¿½nï¿½xt ½ çeï¿=Homï¿½(oï?½½;
+ ï¿= o¿½   ï¿½     ï¿=  iï¿½= (¡ï?½=extï¿= o¿=eoï¿½o¿=uònï¿½
+  o¿½   o¿½ oï?½ï¿½ oï¿½ï¿=   o¿½ ï¿½eo¿½dårAcï¿½ooï¿½½(o¿½exto¿==»oï¿½=     ï¿½ ï¿½=       o¿½rï¿=nï¿=eo¿½Memo¿½eï¿=s(nï¿==xï?½	;
+  ï¿½ oo¿=ï¿½ ï¿½     ï¿½ ï¿½ sùï?½cï¿½eï?½íióoï¿½=ioîï?½Ioï¿½=îext©;Šï¿½=`ï¿= ï¿=     m¿½ ïï?½=;oï¿½ï¿=
+o¿½=         ï¿½= o¿½iï¿½dï¿½wo¿=ro¿=moï¿½ï¿½vï¿=Memï¿=eò ï¿½= (membeï¿½Iï¿½=)ï¿½=o¿½ o¿½
+o¿½ ï¿½   ï¿½ ïï?½= o¿½=     oo¿½ï¿½oï?½st hoï¿½eí?½=ï¿½getï¿½=omeo¿½)ï¿½
+ï¿½   ï¿½ oï¿½=   ï¿½  `ïï¿½½ ifï¿=(!hï¿=moï¿½½)ï¿=retoï¿½½rî;o¿= ï¿½ ï¿½ ï¿= oï¿½o¿½ o¿½   ï¿== ï?½iï¿½ ï?½¡cïnfirï¿½¨oï¿=ï¿½Removï?½ oï¿½=hióï?½íemï¿½er?ï?½)) ï¿½=eï¿½uï¿½nï¿½
+      ïï¿½=     o¿½ ï¿½ o¿==iï¿½dow.Èï?½½mï¿½Mï¿½nágï¿½r.rï¿=mïvo¿=Mï¿==mï¿½er(hoï¿½e.id, memï¿½erId©oo¿½ç¿½
+  ï¿½ oo¿½ï¿½ ï?½   ï?½     cïï?½st oï¿½=exô =ï?½=go¿=ôï¿½oï¿½e()ï¿½
+ï¿= ï¿=   ï¿½     ï¿== ï¿½ ï¿½½fo¿=(ï¿½nï¿½xï¿=) retï¿=rî;Š o¿½   o¿== oo¿½ï¿½ ï¿½   ï¿½= ï¿½ro¿½nderAãtoro¿½nï¿½xï¿½=©;
+!       oï¿== ï¿½     ï¿½eoï¿½=äï¿½rï¿½=emberï¿=(ï¿½eo¿=tï¿=;ï¿½$o¿= o¿= oï¿½o¿= ïï¿½ï¿½ o¿= o¿= ï¿½ !sïï¿½o¿½nï¿=Po¿½ríiï¿½so¿=oîUÉ(nexto¿==»ï¿½ oï¿½ï?½   $   ï?½ ï?½}ï¿½
+oo¿½= oo¿½=     ï?½ ï¿½  ÷indïw®oï¿½ï?½òï?½nï¿½feòï?½wnåï¿½ = oo¿==íï¿½mberIï?½)ï¿½=ï?½ ï¿½
+  ï¿½       ï¿½ ï?½= ï¿½ ão.soï?½o¿= hoï¿½e =o¿=gï¿½=toï¿½ï¿½omåoï¿½=©ï¿½
+  ï¿½ ï¿½ oï¿½ï?½       ï¿½ ï?½æï¿½(ï?½èï¿½mï¿½)oï¿½ï?½retï¿½=rï¿=;o¿=       oï¿½=        ioï¿½ï¿½ ï¿½!confirï¿½(§To¿½aï¿½sfer oï¿½ï¿=wïï¿½=eï¿½sï¿½io¿= ï¿½oï¿½tï¿½iï¿½= ï¿½=eíber?'©) roï?½ï¿½tõrï¿½;Š oï¿½o¿=   o¿½= ï?½       ï¿½÷ï?½½näow.ï¿½oï¿=eo¿½aï¿=aï¿½eo¿½.ï¿=ránófï¿½=rï?½÷ï¿½eoï¿½ï¿½sï?½iï¿½(ï¿½omeï¿½id, mï¿½mbårIï¿½)ï?½=
+ï¿½ ï¿½0ï¿= ï¿½ ï¿½ ï¿½ ï¿½ ï¿½ ï¿=oîst neoï?½½tïï¿½ï¿== gåto¿½oï¿½e¨)»
+o¿½=     ï?½ oï¿½ï¿½       if ¨!nï¿½øt)ï¿½òeôoï¿==òoï¿½ï¿½;
+ ï?½   ï¿½ ï¿½ oo¿½ï¿½   ï?½ ï¿½rendeï?½=Aï¿½=ôï¿½ò(îexoï¿=ï¿½);
+ï¿½= o¿½ ï¿½   ï¿½ o¿= o¿==   reï?½äerMeï¿½âï¿½½rs(ï¿=eï¿=to¿½;ï¿½ ï¿½       ïï?½o¿½   ï¿½  so¿½noï¿½=Påro¿½ioï¿½ï¿½sï¿½onUI(îexto¿½=;
+     ï¿½ ï¿½    ý;
+oo¿½= oo¿½ï¿½   ï¿½= í¿= o¿½ ï¿=so¿=veBtn.addÅvo¿½nï¿½=Äï?½ótåner(ï?½=co¿½ick', (ï¿= o¿½> {ï¿½ o¿½   oï?½ï¿=   ï¿½ ï¿½ o¿= ï¿½cï¿½nï¿½toï¿½½homå ½ oï¿½ï¿½eïï?½ï¿½Hg¿=mï¿½)ï¿½;o¿= o¿½ ï¿½= oo¿=ï?½ oï¿½ï¿½   ï¿½   ï?½½if ï¿µ!ï¿½ome© reï¿½=õï?½îï¿½
+  ï¿½ ï¿½= ï¿½ ïï¿½o¿½   o¿= o¿= o¿½oîsï¿= îext =ï¿={o¿== ï¿½ ï¿½   ï¿½ oï¿½=         ï¿½...ï¿½oï¿½½eo¿½
+ï¿½ ï¿=         ï¿= o¿= ï¿½= ï¿½ náï¿½e: ï?½dï?½½tï¿½ameInput.vaï¿=uo¿=.ï¿½ro¿=mo¿=)ï¿½
+oï¿½o¿= oï¿½o¿=   o¿½ oï?½ï¿½ o¿½     ï¿=   ï¿½at: ediï¿½LatÉno¿½uï¿½ oï¿½ï¿½& edioï?½=Lato¿½nï¿==uoo¿½=.ï¿½áï¿½uï¿½= ï¿==ï¿= o¿½'ï¿=?o¿=Nï¿½moï?½=eò(åditLatIo¿½=ðoï¿½ï?½t.valï¿½e) ï¿½ ï?½nï¿½efineoo¿½ï¿½¬
+ ï¿½½   ï¿=   ï¿½= ï¿½½ ï¿½      lïï?½o¿½goï¿½ï¿= ådétï¿½ngIï¿½putï¿½=¦ï¿½ eäï¿½tLnï?½½Io¿½pï¿½to¿½vo¿½=lï¿½å ¡=½ï¿½='§ ï¿½ Nuï¿½=âï¿½òï?½eï¿½éoo¿==Lï?½gInoï¿½=ut®vaï¿½uoï¿=ë?½)oï¿½ï¿½: õnäï¿½fï?½nï¿½äoï¿½ï¿½ ï¿½ ï¿½       oï¿½= oo¿=ï¿½  };
+ï¿½ oï¿½ï¿½ ï?½= ïï?½= oï¿½ï¿= $ ï¿½ ï»½ éf (!Nï¿=mo¿½eï¿½.ï¿½=sFioï¿½=iï¿½åï¿½îexï¿½=.oï¿½½aï¿½)) äeo¿=eteï¿=nexô.ï¿½aï¿½;o¿½ ï¿½   ï¿=   o¿½ï¿½ ï¿½ ï?½ ï¿½éï?½ (!Nuoï¿==boo¿½ï¿½r.éï¿½Æiîï¿½toï¿½=¨ï¿½=eï¿=t®lng©)ï¿½dï¿=loï¿½=te neï¿=to¿½=lng;Šï?½= ï¿½   o¿½ ï¿½   ï¿=   windï¿=wo¿==Hoï¿½ï¿½íeManagï¿½òï?½uï¿½serï¿½Hoo¿==mï¿½¨nexô)»ï¿½ ï?½ ï?½         ï?½½ oï¿½ï¿=mïï¿½ï¿½dal.claï¿½sLio¿=to¿½remï¿=ve('ao¿½tï¿==ve');
+ oï¿½= oï¿½=     ï?½ ï?½=!oï¿½o¿= o¿==reîdåï¿½();
+ ï¿½ ï?½ ï¿½      ýï?½;ï¿½
+      oo¿½ï¿½ oï¿½ï¿½   deï?½åteï¿½ôï?½.oï¿½ï¿½dï¿½Åvåï¿½tLésôener('ï¿½ìicï¿½'oï¿½= ï¿½) ½ï¿½= {
+        oï¿½o¿½ ïï¿½=   ï¿= if (coï¿½firï¿½(ï¿½Are!yo¿½u sïï¿½ï¿=re yoï¿½ o¿½aï¿½t to deleteoï?½ï¿½tèiï¿½= hoï¿½½e?'ï»½)ï¿½{o¿½     oï¿½= oï¿½½ o¿= ï¿½ ï¿½ o¿½ o¿½ ï¿=wo¿½nï¿½ï¿½.o»=oï¿½eMaoï¿½½aï¿=er.oï¿½½eïï¿½ï¿=oveoï?½ï¿½ome¨ediï¿½=iï¿½gï?½=om%Idïï?½ï¿=;ï¿½=     ï?½ ï¿½   ï¿½ ï¿½(ï¿½   ï?½modaìï¿½½#lassLio¿=t®rïï¿½=mï¿½ve('aï¿½tévï¿='o¿=;ˆ   oï¿½ï¿=   oï¿½½ ïï¿½o¿½         ï¿½=rï¿½îï?½eï¿½();ï¿½   ï¿½ ï?½ ï?½ ï¿½ ï¿½   ï¿½}
+       oï¿½=    ý)»
+Šï¿½ oo¿=ï?½     ï¿½   ï?½lï¿½soï¿½ï¿½Btnï¿½aï¿½dï¿½vï?½nï¿½listenåoï¿==(ï¿½click'¬oo¿½ï¿½¨oo¿½= => moäï?½d.ãï¿½aï¿½½soï¿½ï¿½iï¿½t®ro¿½=movï?½¨ï¿½actiöï?½='ï¿½)ï¿=
+ï¿½   ï¿½ o¿= ï¿== ï¿½ oo¿==rendeoï¿=ï?½¨ï¿½;
+ ï?½=     ï¿½   o¿=toï¿½ï¿=y {Š oï¿½½ oï¿½ï¿½ ï¿= o¿½ ï¿½ ï¿= ï¿=  co¿½no¿½tï¿=pï¿½ro¿½mó oï¿½ï¿½ ï¿½ew ï¿½RLSaaï¿=cèaro¿½mo¿=(oï¿½=oï¿½ao¿½=iï¿½nï¿½óï¿½arcoï¿­=©oï¿½ï?½
+    ï¿½=     ï¿== ï¿½ ï?½ oo¿½ï¿½ïï¿½½so¿½= ï¿½õtoIäoï¿½ï?½½ pï¿½òï¿½éï¿½®ï¿½eoï¿½ï¿½¨ï¿½=hï¿=mï¿½Id') ï¿=|ïï?½=pï¿½rï¿=ms.geï¿½(§iï¿½'©;ï¿½         ï¿½ oï?½ï¿½ ï¿½ o¿==éï?½= (aõtïIo¿½)ï¿½{o¿== ï?½ ï¿½=   o¿½ ï¿½   o¿== ï¿½    òï?½qï¿½=eïï¿½ï¿½tï¿½=îoï¿½ï¿½matï¿½onÆï¿½aï¿½åï¿½() =>oï¿½ï?½wï?½nlow®oðoo¿½=nï¿½dï?½ôï¿½oï¿½al¨auï?½ooï¿½ï?½doo¿½ï¿½);
+  oï¿½ï¿½ ï?½ ï?½ ï¿½ ï¿½   oï¿½ï¿½ }Šï¿½=   o¿½   ï¿½   ï¿½ o¿=atch ïï?½=_ï¿½ ï¿= ý
+oï¿½ï¿½   ïï¿½½ ï¿½     windoï¿½½wï¿½aädoï¿½½vï¿½no¿½Listeo¿=eo¿½('tï¿=yï¿=coï¿½ï¿=_o¿½oïï¿½o¿½es_õpäaïï¿½=eo¿=7, òeï¿½dï¿=rï¿½;oï¿½o¿½       ï¿½});Š    </soï¿½o¿=rï¿½pï¿½>oï?½=</bïdy>oï¿½ï¿½
+ï¿½/o¿½tmlï¿=

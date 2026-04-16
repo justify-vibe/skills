@@ -1,0 +1,178 @@
+/* Routine Builder Styles */
+.routine-builder {
+    padding: 0 24px;
+}
+
+.routine-name {
+    padding: 20px 0 24px;
+}
+
+.routine-name-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -0.04em;
+}
+
+.routine-name-input::placeholder {
+    color: #d1d1d6;
+}
+
+.builder-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.builder-card-chevron {
+    color: #d1d1d6;
+    font-size: 20px !important;
+}
+
+.builder-card-icon--time {
+    background: rgb(var(--primary-rgb) / 0.1);
+    color: var(--primary);
+}
+
+.builder-card-icon--sun {
+    background: rgba(251, 188, 4, 0.1);
+    color: #fbbc04;
+}
+
+.builder-card-icon--location {
+    background: rgba(52, 168, 83, 0.1);
+    color: #34a853;
+}
+
+.builder-card-icon--device {
+    background: rgb(var(--accent-rgb) / 0.1);
+    color: var(--accent);
+}
+
+/* Sheets are now in common.css */
+.routine-option {
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+}
+
+.routine-option-sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+.routine-builder-stage {
+    padding-bottom: 110px;
+}
+
+.builder-step {
+    margin-bottom: 24px;
+}
+
+.builder-step h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 12px;
+    padding: 0 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.builder-card {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 20px;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.builder-card-left {
+    display: flex;
+    align-items: center;
+}
+
+.builder-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    color: var(--primary);
+}
+
+.builder-card-info h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 2px;
+}
+
+.builder-card-info p {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.add-action-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 20px;
+    border: 2px dashed rgb(var(--primary-rgb) / 0.3);
+    background: rgb(var(--primary-rgb) / 0.06);
+    color: var(--primary);
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.add-action-btn:hover {
+    background: rgb(var(--primary-rgb) / 0.12);
+    border-color: rgb(var(--primary-rgb) / 0.55);
+}
+
+.routine-save-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 18px 24px 22px;
+    background: linear-gradient(to top, rgba(250, 250, 250, 0.98) 80%, rgba(250, 250, 250, 0));
+    z-index: 100;
+}
+
+.routine-primary-btn {
+    width: 100%;
+    padding: 18px;
+    border-radius: 20px;
+    background: var(--primary);
+    color: white;
+    font-size: 16px;
+    font-weight: 800;
+    border: none;
+    box-shadow: 0 10px 25px rgb(var(--primary-rgb) / 0.3);
+    cursor: pointer;
+}
+
+.floating-save-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 35px rgb(var(--primary-rgb) / 0.4);
+}

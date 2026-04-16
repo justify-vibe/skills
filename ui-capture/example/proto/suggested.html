@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thynco | Suggested</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="./common.css">
+    <link rel="stylesheet" href="./scenes.css">
+    <link rel="stylesheet" href="./suggested.css">
+</head>
+
+<body>
+    <div id="canvas-viewport">
+        <div class="mesh-bg"></div>
+        <div id="app-content">
+            <section id="suggested" class="stage active suggested-stage">
+                <header class="sub-bar">
+                    <button type="button" class="circle-btn" aria-label="Back" onclick="location.href='scenes.html'">
+                        <span class="material-icons">chevron_left</span>
+                    </button>
+                    <div class="sub-bar-title">
+                        <h4>Suggested</h4>
+                    </div>
+                    <div class="sub-bar-spacer"></div>
+                </header>
+
+                <div class="routines-search google-card suggested-search">
+                    <span class="material-icons routines-search-icon">search</span>
+                    <input type="text" placeholder="Search presets" aria-label="Search presets" data-suggested-search>
+                </div>
+
+                <div class="scene-grid suggested-grid" data-suggested-grid>
+                    <div class="routine-template scene-card" onclick="location.href='create-routine.html?template=morning'"
+                        data-title="good morning">
+                        <div class="scene-card-left">
+                            <div class="scene-icon scene-icon--sunrise">
+                                <span class="material-icons">wb_sunny</span>
+                            </div>
+                            <div class="scene-info">
+                                <h4>Good Morning</h4>
+                            </div>
+                        </div>
+                        <span class="material-icons routine-chevron">chevron_right</span>
+                    </div>
+
+                    <div class="routine-template scene-card" onclick="location.href='create-routine.html?template=leaving'"
+                        data-title="leaving home">
+                        <div class="scene-card-left">
+                            <div class="scene-icon scene-icon--leaving">
+                                <span class="material-icons">exit_to_app</span>
+                            </div>
+                            <div class="scene-info">
+                                <h4>Leaving Home</h4>
+                            </div>
+                        </div>
+                        <span class="material-icons routine-chevron">chevron_right</span>
+                    </div>
+
+                    <div class="routine-template scene-card" onclick="location.href='create-routine.html?template=arrival'"
+                        data-title="arriving home">
+                        <div class="scene-card-left">
+                            <div class="scene-icon">
+                                <span class="material-icons">home</span>
+                            </div>
+                            <div class="scene-info">
+                                <h4>Arriving Home</h4>
+                            </div>
+                        </div>
+                        <span class="material-icons routine-chevron">chevron_right</span>
+                    </div>
+
+                    <div class="routine-template scene-card" onclick="location.href='create-routine.html?template=away'"
+                        data-title="away mode">
+                        <div class="scene-card-left">
+                            <div class="scene-icon">
+                                <span class="material-icons">shield</span>
+                            </div>
+                            <div class="scene-info">
+                                <h4>Away Mode</h4>
+                            </div>
+                        </div>
+                        <span class="material-icons routine-chevron">chevron_right</span>
+                    </div>
+
+                    <div class="routine-template scene-card" onclick="location.href='create-routine.html?template=movie'"
+                        data-title="movie night">
+                        <div class="scene-card-left">
+                            <div class="scene-icon scene-icon--movie">
+                                <span class="material-icons">movie</span>
+                            </div>
+                            <div class="scene-info">
+                                <h4>Movie Night</h4>
+                            </div>
+                        </div>
+                        <span class="material-icons routine-chevron">chevron_right</span>
+                    </div>
+
+                    <div class="routine-template scene-card" onclick="location.href='create-routine.html?template=relax'"
+                        data-title="relax">
+                        <div class="scene-card-left">
+                            <div class="scene-icon">
+                                <span class="material-icons">self_improvement</span>
+                            </div>
+                            <div class="scene-info">
+                                <h4>Relax</h4>
+                            </div>
+                        </div>
+                        <span class="material-icons routine-chevron">chevron_right</span>
+                    </div>
+
+                    <div class="routine-template scene-card" onclick="location.href='create-routine.html?template=clean'"
+                        data-title="clean up">
+                        <div class="scene-card-left">
+                            <div class="scene-icon">
+                                <span class="material-icons">cleaning_services</span>
+                            </div>
+                            <div class="scene-info">
+                                <h4>Clean Up</h4>
+                            </div>
+                        </div>
+                        <span class="material-icons routine-chevron">chevron_right</span>
+                    </div>
+
+                    <div class="routine-template scene-card" onclick="location.href='create-routine.html?template=workout'"
+                        data-title="workout">
+                        <div class="scene-card-left">
+                            <div class="scene-icon">
+                                <span class="material-icons">fitness_center</span>
+                            </div>
+                            <div class="scene-info">
+                                <h4>Workout</h4>
+                            </div>
+                        </div>
+                        <span class="material-icons routine-chevron">chevron_right</span>
+                    </div>
+
+                    <div class="routine-template scene-card" onclick="location.href='create-routine.html?template=dinner'"
+                        data-title="dinner time">
+                        <div class="scene-card-left">
+                            <div class="scene-icon">
+                                <span class="material-icons">restaurant</span>
+                            </div>
+                            <div class="scene-info">
+                                <h4>Dinner Time</h4>
+                            </div>
+                        </div>
+                        <span class="material-icons routine-chevron">chevron_right</span>
+                    </div>
+
+                    <div class="routine-template scene-card" onclick="location.href='create-routine.html?template=night'"
+                        data-title="good night">
+                        <div class="scene-card-left">
+                            <div class="scene-icon scene-icon--night">
+                                <span class="material-icons">bedtime</span>
+                            </div>
+                            <div class="scene-info">
+                                <h4>Good Night</h4>
+                            </div>
+                        </div>
+                        <span class="material-icons routine-chevron">chevron_right</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+    <script>
+        (() => {
+            const input = document.querySelector('[data-suggested-search]');
+            const grid = document.querySelector('[data-suggested-grid]');
+            if (!input || !grid) return;
+            const normalize = (s) => (s || '').toString().trim().toLowerCase();
+            input.addEventListener('input', () => {
+                const q = normalize(input.value);
+                const cards = Array.from(grid.querySelectorAll('.scene-card'));
+                cards.forEach(c => {
+                    const t = normalize(c.getAttribute('data-title') || c.textContent);
+                    c.classList.toggle('is-hidden', !!q && !t.includes(q));
+                });
+            });
+        })();
+    </script>
+</body>
+
+</html>

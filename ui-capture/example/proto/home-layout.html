@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thynco | Edit Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="./common.css">
+    <link rel="stylesheet" href="./home-layout.css">
+</head>
+
+<body>
+    <div id="canvas-viewport">
+        <div class="mesh-bg"></div>
+        <div id="app-content">
+            <section id="home-layout" class="stage active home-layout-stage">
+                <header class="sub-bar">
+                    <button type="button" class="circle-btn" aria-label="Back" data-nav-to="index.html">
+                        <span class="material-icons">chevron_left</span>
+                    </button>
+                    <div class="sub-bar-title">
+                        <h4>Edit Home</h4>
+                    </div>
+                    <button type="button" class="link-btn" data-home-layout-reset>Reset</button>
+                </header>
+
+                <div class="home-layout-card google-card">
+                    <div class="home-layout-title">Sections</div>
+                    <div class="home-layout-list" data-home-layout-list></div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        (() => {
+            const list = document.querySelector('[data-home-layout-list]');
+            const resetBtn = document.querySelector('[data-home-layout-reset]');
+            if (!list) return;
+
+            const key = 'thynco_home_layout_v1';
+            const SECTIONS = [
+                { id: 'insight', name: 'AI Summary' },
+                { id: 'overview', name: 'Overview' },
+                { id: 'automations', name: 'Automations' },
+                { id: 'rooms', name: 'Rooms' }
+            ];
+
+            const defaultConfig = () => ({
+                order: SECTIONS.map(s => s.id),
+                hidden: {}
+            });
+
+            const load = () => {
+                try {
+                    const raw = localStorage.getItem(key);
+                    if (!raw) return defaultConfig();
+                    const parsed = JSON.parse(raw);
+                    const order = Array.isArray(parsed?.order) ? parsed.order : defaultConfig().order;
+                    const hidden = parsed?.hidden && typeof parsed.hidden === 'object' ? parsed.hidden : {};
+                    return { order: order.filter(id => SECTIONS.some(s => s.id === id)), hidden };
+                } catch (_) {
+                    return defaultConfig();
+                }
+            };
+
+            const save = (cfg) => {
+                try { localStorage.setItem(key, JSON.stringify(cfg)); } catch (_) { }
+            };
+
+            const render = () => {
+                const cfg = load();
+                list.innerHTML = '';
+                cfg.order.forEach((id, idx) => {
+                    const s = SECTIONS.find(x => x.id === id);
+                    if (!s) return;
+                    const row = document.createElement('div');
+                    row.className = 'home-layout-row';
+                    row.innerHTML = `
+                        <label class="home-layout-left">
+                            <input type="checkbox" class="home-layout-check" ${cfg.hidden[id] ? '' : 'checked'} data-layout-toggle="${id}">
+                            <span class="home-layout-name">${s.name}</span>
+                        </label>
+                        <div class="home-layout-right">
+                            <button type="button" class="home-layout-move" ${idx === 0 ? 'disabled' : ''} data-layout-up="${id}">
+                                <span class="material-icons">arrow_upward</span>
+                            </button>
+                            <button type="button" class="home-layout-move" ${idx === cfg.order.length - 1 ? 'disabled' : ''} data-layout-down="${id}">
+                                <span class="material-icons">arrow_downward</span>
+                            </button>
+                        </div>
+                    `;
+                    list.appendChild(row);
+                });
+
+                list.querySelectorAll('[data-layout-toggle]').forEach(el => {
+                    el.addEventListener('change', () => {
+                        const id = el.getAttribute('data-layout-toggle');
+                        const next = load();
+                        if (!id) return;
+                        next.hidden[id] = !el.checked;
+                        save(next);
+                    });
+                });
+
+                list.querySelectorAll('[data-layout-up]').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const id = btn.getAttribute('data-layout-up');
+                        const next = load();
+                        const i = next.order.indexOf(id);
+                        if (i <= 0) return;
+                        const tmp = next.order[i - 1];
+                        next.order[i - 1] = next.order[i];
+                        next.order[i] = tmp;
+                        save(next);
+                        render();
+                    });
+                });
+
+                list.querySelectorAll('[data-layout-down]').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const id = btn.getAttribute('data-layout-down');
+                        const next = load();
+                        const i = next.order.indexOf(id);
+                        if (i < 0 || i >= next.order.length - 1) return;
+                        const tmp = next.order[i + 1];
+                        next.order[i + 1] = next.order[i];
+                        next.order[i] = tmp;
+                        save(next);
+                        render();
+                    });
+                });
+            };
+
+            resetBtn?.addEventListener('click', () => {
+                const cfg = defaultConfig();
+                save(cfg);
+                render();
+            });
+
+            render();
+        })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thynco | Settings</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="./common.css">
+    <link rel="stylesheet" href="./user.css">
+</head>
+
+<body>
+    <div id="canvas-viewport">
+        <div class="mesh-bg"></div>
+        <div id="app-content">
+            <section id="settings" class="stage active">
+                <header class="header">
+                    <div class="header-left">
+                        <button type="button" class="circle-btn" onclick="location.href='user.html'" aria-label="Back" style="margin-bottom: 8px;">
+                            <span class="material-icons">chevron_left</span>
+                        </button>
+                        <h1 class="header-title">Settings</h1>
+                    </div>
+                </header>
+
+                <div class="profile-container">
+                    <div class="sec-label">
+                        <h3>ACCOUNT</h3>
+                    </div>
+
+                    <div class="google-card profile-group">
+                        <button type="button" class="profile-item" onclick="location.href='home-management.html'">
+                            <div class="profile-item-icon">
+                                <span class="material-icons">home</span>
+                            </div>
+                            <div class="profile-item-content">
+                                <h4>Home Management</h4>
+                                <p>Manage homes, rooms, and members</p>
+                            </div>
+                            <span class="material-icons profile-chevron">chevron_right</span>
+                        </button>
+                        
+                        <button type="button" class="profile-item" onclick="location.href='profile-edit.html'">
+                            <div class="profile-item-icon">
+                                <span class="material-icons">person</span>
+                            </div>
+                            <div class="profile-item-content">
+                                <h4>Personal Information</h4>
+                                <p>Manage your data and privacy</p>
+                            </div>
+                            <span class="material-icons profile-chevron">chevron_right</span>
+                        </button>
+
+                        <button type="button" class="profile-item">
+                            <div class="profile-item-icon">
+                                <span class="material-icons">shield</span>
+                            </div>
+                            <div class="profile-item-content">
+                                <h4>Security & Login</h4>
+                                <p>Two-step verification, passwords</p>
+                            </div>
+                            <span class="material-icons profile-chevron">chevron_right</span>
+                        </button>
+                    </div>
+
+                    <div class="sec-label">
+                        <h3>PREFERENCES</h3>
+                    </div>
+
+                    <div class="google-card profile-group">
+                        <button type="button" class="profile-item">
+                            <div class="profile-item-icon">
+                                <span class="material-icons">notifications</span>
+                            </div>
+                            <div class="profile-item-content">
+                                <h4>Notifications</h4>
+                                <p>Control what alerts you receive</p>
+                            </div>
+                            <span class="material-icons profile-chevron">chevron_right</span>
+                        </button>
+
+                        <button type="button" class="profile-item">
+                            <div class="profile-item-icon">
+                                <span class="material-icons">dark_mode</span>
+                            </div>
+                            <div class="profile-item-content">
+                                <h4>Display & Language</h4>
+                                <p>Dark mode, English (US)</p>
+                            </div>
+                            <span class="material-icons profile-chevron">chevron_right</span>
+                        </button>
+                    </div>
+
+                    <div class="sec-label">
+                        <h3>SUPPORT</h3>
+                    </div>
+
+                    <div class="google-card profile-group">
+                        <button type="button" class="profile-item">
+                            <div class="profile-item-icon">
+                                <span class="material-icons">help_outline</span>
+                            </div>
+                            <div class="profile-item-content">
+                                <h4>Help Center</h4>
+                                <p>FAQs and support tickets</p>
+                            </div>
+                            <span class="material-icons profile-chevron">chevron_right</span>
+                        </button>
+                    </div>
+
+                    <button type="button" class="profile-logout-btn" data-sign-out>
+                        <span class="material-icons">logout</span>
+                        <span>Sign Out</span>
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+
+</html>

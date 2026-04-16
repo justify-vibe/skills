@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thynco | Add Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="./common.css">
+    <link rel="stylesheet" href="./add-home.css">
+</head>
+ 
+<body>
+    <div id="canvas-viewport">
+        <div class="mesh-bg"></div>
+        <div id="app-content">
+            <section id="add-home" class="stage active add-home-stage">
+                <header class="sub-bar">
+                    <button type="button" class="circle-btn" aria-label="Back" onclick="location.href='home-management.html'">
+                        <span class="material-icons">chevron_left</span>
+                    </button>
+                    <div class="sub-bar-title">
+                        <h4>Add Home</h4>
+                    </div>
+                    <button type="button" class="routine-save-link" data-add-home-save>
+                        Save
+                    </button>
+                </header>
+ 
+                <div class="add-home-body">
+                    <div class="add-home-hero google-card">
+                        <div class="add-home-hero-title">Create a home</div>
+                        <div class="add-home-hero-sub">Use multiple homes and quickly switch between them.</div>
+                    </div>
+
+                    <div class="builder-step">
+                        <h3>Home Name</h3>
+                        <input type="text" class="add-home-input" data-add-home-name placeholder="Harbor House" />
+                    </div>
+
+                    <div class="builder-step">
+                        <h3>Home ID</h3>
+                        <input type="text" class="add-home-input" data-add-home-id placeholder="harbor-house" />
+                        <div class="add-home-hint">Auto-generated from name. You can edit it.</div>
+                    </div>
+
+                    <div class="builder-step">
+                        <h3>Location (Optional)</h3>
+                        <button type="button" class="builder-card add-home-location-card" data-add-home-use-location>
+                            <div class="builder-card-left">
+                                <div class="builder-card-icon builder-card-icon--location">
+                                    <span class="material-icons">my_location</span>
+                                </div>
+                                <div class="builder-card-info">
+                                    <h4>Use current location</h4>
+                                    <p data-add-home-location-status>Not set</p>
+                                </div>
+                            </div>
+                            <span class="material-icons builder-card-chevron">chevron_right</span>
+                        </button>
+                        <button type="button" class="link-btn add-home-location-clear" data-add-home-clear-location>Clear location</button>
+                    </div>
+
+                    <div class="add-home-foot">
+                        Saved homes show up in the Homes list. Nearest uses location when available.
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+ 
+    <script src="./app.js"></script>
+</body>
+ 
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thynco | AI Routine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="./common.css">
+    <link rel="stylesheet" href="./ai-routine.css">
+</head>
+
+<body>
+    <div id="canvas-viewport">
+        <div class="mesh-bg"></div>
+        <div id="app-content">
+            <section id="ai-routine" class="stage active ai-routine-stage">
+                <header class="sub-bar">
+                    <button type="button" class="circle-btn" aria-label="Back" onclick="location.href='scenes.html'">
+                        <span class="material-icons">chevron_left</span>
+                    </button>
+                    <div class="sub-bar-title">
+                        <h4>AI Routine</h4>
+                    </div>
+                    <div class="sub-bar-spacer"></div>
+                </header>
+
+                <div class="ai-routine-body">
+                    <div class="ai-routine-card google-card">
+                        <div class="ai-routine-label">Describe your routine</div>
+                        <textarea class="ai-routine-input" rows="4" placeholder="Example: When I leave home, turn off all lights and lock the door."
+                            data-ai-routine-input></textarea>
+                        <div class="ai-routine-examples">
+                            <button type="button" class="ai-routine-chip" data-ai-example="movie night">Movie night</button>
+                            <button type="button" class="ai-routine-chip" data-ai-example="good morning">Good morning</button>
+                            <button type="button" class="ai-routine-chip" data-ai-example="away mode">Away mode</button>
+                        </div>
+                    </div>
+
+                    <button type="button" class="ai-routine-generate" data-ai-routine-generate>Generate</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+    <script>
+        (() => {
+            const input = document.querySelector('[data-ai-routine-input]');
+            const generate = document.querySelector('[data-ai-routine-generate]');
+            const chips = Array.from(document.querySelectorAll('[data-ai-example]'));
+            if (!input || !generate) return;
+
+            const normalize = (s) => (s || '').toString().trim().toLowerCase();
+            const pickTemplate = (raw) => {
+                const t = normalize(raw);
+                if (!t) return 'morning';
+                if (t.includes('movie') || t.includes('netflix') || t.includes('tv') || t.includes('电影')) return 'movie';
+                if (t.includes('leave') || t.includes('away') || t.includes('离开') || t.includes('外出')) return 'leaving';
+                if (t.includes('arrive') || t.includes('home') || t.includes('回家') || t.includes('到家')) return 'arrival';
+                if (t.includes('night') || t.includes('sleep') || t.includes('bed') || t.includes('晚安') || t.includes('睡')) return 'night';
+                if (t.includes('clean') || t.includes('cleanup') || t.includes('打扫')) return 'clean';
+                if (t.includes('workout') || t.includes('gym') || t.includes('健身')) return 'workout';
+                if (t.includes('dinner') || t.includes('晚餐') || t.includes('吃饭')) return 'dinner';
+                if (t.includes('relax') || t.includes('放松')) return 'relax';
+                return 'morning';
+            };
+
+            chips.forEach(b => {
+                b.addEventListener('click', () => {
+                    input.value = b.getAttribute('data-ai-example') || '';
+                    input.focus();
+                });
+            });
+
+            generate.addEventListener('click', () => {
+                const prompt = input.value || '';
+                const template = pickTemplate(prompt);
+                const params = new URLSearchParams();
+                params.set('template', template);
+                if (prompt.trim()) params.set('prompt', prompt.trim());
+                params.set('ai', '1');
+                location.href = `create-routine.html?${params.toString()}`;
+            });
+        })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thynco | New Routine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="./common.css">
+    <link rel="stylesheet" href="./create-routine.css">
+</head>
+
+<body>
+    <div id="canvas-viewport">
+        <div class="mesh-bg"></div>
+        <div id="app-content">
+            <section id="create-routine" class="stage active routine-builder-stage">
+                <header class="sub-bar">
+                    <button type="button" class="circle-btn" aria-label="Back" onclick="location.href='scenes.html'">
+                        <span class="material-icons">chevron_left</span>
+                    </button>
+                    <div class="sub-bar-title">
+                        <h4>New Routine</h4>
+                    </div>
+                    <div class="sub-bar-spacer"></div>
+                </header>
+
+                <div class="routine-builder">
+                    <div class="routine-name">
+                        <input type="text" class="routine-name-input" placeholder="Routine name" value="Movie Mode"
+                            aria-label="Routine name" data-routine-name>
+                    </div>
+
+                    <div class="builder-step">
+                        <h3>When (Trigger)</h3>
+                        <div class="builder-list" data-routine-triggers>
+                        <div class="builder-card" role="button" tabindex="0" data-routine-item="trigger">
+                            <div class="builder-card-left">
+                                <div class="builder-card-icon builder-card-icon--time">
+                                    <span class="material-icons">schedule</span>
+                                </div>
+                                <div class="builder-card-info">
+                                    <h4>Time of Day</h4>
+                                    <p>8:00 PM, Weekdays</p>
+                                </div>
+                            </div>
+                            <span class="material-icons builder-card-chevron">chevron_right</span>
+                        </div>
+                        </div>
+
+                        <button type="button" class="add-action-btn" data-add-trigger>
+                            <span class="material-icons" style="margin-right: 8px;">add</span>
+                            Add Trigger
+                        </button>
+                    </div>
+
+                    <div class="builder-step">
+                        <h3>Then (Actions)</h3>
+
+                        <div class="builder-list" data-routine-actions>
+                            <div class="builder-card" role="button" tabindex="0" data-routine-item="action">
+                                <div class="builder-card-left">
+                                    <div class="builder-card-icon">
+                                        <span class="material-icons">lightbulb</span>
+                                    </div>
+                                    <div class="builder-card-info">
+                                        <h4>Living Room Lights</h4>
+                                        <p>Turn On • 30% Brightness</p>
+                                    </div>
+                                </div>
+                                <span class="material-icons builder-card-chevron">chevron_right</span>
+                            </div>
+
+                            <div class="builder-card" role="button" tabindex="0" data-routine-item="action">
+                                <div class="builder-card-left">
+                                    <div class="builder-card-icon">
+                                        <span class="material-icons">tv</span>
+                                    </div>
+                                    <div class="builder-card-info">
+                                        <h4>TV Hub</h4>
+                                        <p>Turn On • Launch Netflix</p>
+                                    </div>
+                                </div>
+                                <span class="material-icons builder-card-chevron">chevron_right</span>
+                            </div>
+                        </div>
+
+                        <button type="button" class="add-action-btn" data-add-action>
+                            <span class="material-icons" style="margin-right: 8px;">add</span>
+                            Add Action
+                        </button>
+                    </div>
+                </div>
+
+            </section>
+
+            <div class="routine-save-bar">
+                <button type="button" class="routine-primary-btn" data-routine-primary-save>Save routine</button>
+            </div>
+
+            <div class="sheet-overlay" data-routine-sheet-overlay></div>
+            <div class="routine-sheet" data-routine-sheet aria-hidden="true">
+                <div class="sheet-handle"></div>
+                <div class="sheet-head">
+                    <div class="sheet-icon"><span class="material-icons" data-routine-sheet-icon>auto_awesome</span></div>
+                    <div class="sheet-title">
+                        <h2 data-routine-sheet-title>Select</h2>
+                        <p data-routine-sheet-subtitle></p>
+                    </div>
+                    <button type="button" class="circle-btn sheet-close-btn" aria-label="Close" data-routine-sheet-close>
+                        <span class="material-icons">close</span>
+                    </button>
+                </div>
+                <div class="sheet-controls" data-routine-sheet-options></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+
+</html>

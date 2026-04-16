@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thynco | Add Device</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="./common.css">
+    <link rel="stylesheet" href="./add-device.css">
+</head>
+
+<body>
+    <div id="canvas-viewport">
+        <div class="mesh-bg"></div>
+        <div id="app-content">
+            <section id="add-device" class="stage active add-device-stage">
+                <header class="sub-bar">
+                    <button type="button" class="circle-btn" aria-label="Back" data-nav-to="devices.html">
+                        <span class="material-icons">chevron_left</span>
+                    </button>
+                    <div class="sub-bar-title">
+                        <h4>Add Device</h4>
+                    </div>
+                    <button type="button" class="circle-btn" aria-label="Scan" data-add-device-scan>
+                        <span class="material-icons">qr_code</span>
+                    </button>
+                </header>
+
+                <div class="add-device-body">
+                    <div class="add-device-mode">
+                        <button type="button" class="mode-btn active" data-add-device-mode="auto">Auto search</button>
+                        <button type="button" class="mode-btn" data-add-device-mode="manual">Manual</button>
+                    </div>
+
+                    <div class="add-device-panel active" data-add-device-panel="auto">
+                        <div class="auto-search-card">
+                            <div class="auto-head">
+                                <div class="auto-orb-container">
+                                    <svg width="0" height="0" style="position:absolute;">
+                                        <defs>
+                                            <filter id="goo">
+                                                <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                                                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10" result="goo" />
+                                                <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+                                            </filter>
+                                        </defs>
+                                    </svg>
+                                    <div class="auto-orb-wrap" data-auto-orb>
+                                        <div class="liquid-container">
+                                            <div class="liquid-orb"></div>
+                                            <div class="liquid-blob blob-1"></div>
+                                            <div class="liquid-blob blob-2"></div>
+                                            <div class="liquid-blob blob-3"></div>
+                                            <div class="liquid-blob blob-4"></div>
+                                            <div class="liquid-blob blob-5"></div>
+                                        </div>
+                                        <div class="scan-ring"></div>
+                                    </div>
+                                </div>
+                                <div class="auto-meta">
+                                    <div class="auto-title" data-auto-title>Searching nearby devices…</div>
+                                </div>
+                            </div>
+
+                            <div class="auto-results" data-auto-results>
+                                <div class="discover-grid" data-discover-list></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="add-device-panel" data-add-device-panel="manual">
+                        <div class="builder-step">
+                            <h3>Device Name</h3>
+                            <input type="text" class="add-device-input" data-add-device-name placeholder="Desk Lamp" />
+                        </div>
+
+                        <div class="builder-step">
+                            <h3>Type</h3>
+                            <select class="add-device-select" data-add-device-type>
+                                <option value="light">Light</option>
+                                <option value="climate">Climate</option>
+                                <option value="media">Media</option>
+                                <option value="sensor">Sensor</option>
+                                <option value="lock">Lock</option>
+                                <option value="camera">Camera</option>
+                            </select>
+                        </div>
+
+                        <div class="manual-actions">
+                            <button type="button" class="sheet-primary-btn" data-add-device-manual-add>Add device</button>
+                        </div>
+                    </div>
+
+                    <div class="add-device-foot">
+                        New devices are saved locally to the active home.
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+
+</html>

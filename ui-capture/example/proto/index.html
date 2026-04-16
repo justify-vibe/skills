@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thynco | Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="./common.css">
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./assistant.css">
+</head>
+
+<body>
+    <div id="canvas-viewport">
+        <div class="mesh-bg"></div>
+        <div id="app-content">
+            <section id="home" class="stage active">
+                <header class="header">
+                    <div class="header-left">
+                        <button type="button" class="home-context-picker" data-home-picker-open aria-label="Switch home">
+                            <span data-home-name>Smart Home</span>
+                            <span class="material-icons">expand_more</span>
+                        </button>
+                        <h1 class="header-title">Hi, <span data-user-name>Alex</span></h1>
+                    </div>
+                    <div class="header-right">
+                        <button type="button" class="circle-btn" aria-label="More" data-home-menu-open>
+                            <span class="material-icons">more_horiz</span>
+                        </button>
+                    </div>
+                </header>
+
+                <div class="insight-card" data-home-block="insight">
+                    <div class="insight-pill">
+                        <span class="material-icons insight-pill-icon">auto_awesome</span>
+                        <span>AI Summary</span>
+                    </div>
+                    <div class="insight-text">Home temperature is perfect at 72°F. Your front door is locked and security is active.</div>
+                </div>
+
+                <div data-home-block="automations">
+                    <div class="sec-label">
+                        <h3>AUTOMATIONS</h3>
+                        <span class="link-btn" onclick="location.href='home-layout.html'">Manage</span>
+                    </div>
+                    <div class="home-routines-row" data-home-routines>
+                        <!-- Automations will be populated by app.js -->
+                    </div>
+                </div>
+
+                <div data-home-block="rooms">
+                    <div class="sec-label">
+                        <h3>ROOMS</h3>
+                        <span class="link-btn" onclick="location.href='rooms.html'">See all</span>
+                    </div>
+                    <div class="rooms-row">
+                        <div class="google-card room-card" onclick="location.href='room.html?id=r1'">
+                            <div class="room-card-top">
+                                <div class="room-card-icon">
+                                    <span class="material-icons">weekend</span>
+                                </div>
+                            </div>
+                            <div class="room-card-bottom">
+                                <div class="room-card-name">Living Room</div>
+                            </div>
+                        </div>
+                        <div class="google-card room-card" onclick="location.href='room.html?id=r2'">
+                            <div class="room-card-top">
+                                <div class="room-card-icon">
+                                    <span class="material-icons">kitchen</span>
+                                </div>
+                            </div>
+                            <div class="room-card-bottom">
+                                <div class="room-card-name">Kitchen</div>
+                            </div>
+                        </div>
+                        <div class="google-card room-card" onclick="location.href='room.html?id=r3'">
+                            <div class="room-card-top">
+                                <div class="room-card-icon">
+                                    <span class="material-icons">bed</span>
+                                </div>
+                            </div>
+                            <div class="room-card-bottom">
+                                <div class="room-card-name">Bedroom</div>
+                            </div>
+                        </div>
+                        <div class="google-card room-card" onclick="location.href='room.html?id=r4'">
+                            <div class="room-card-top">
+                                <div class="room-card-icon">
+                                    <span class="material-icons">bathtub</span>
+                                </div>
+                            </div>
+                            <div class="room-card-bottom">
+                                <div class="room-card-name">Bathroom</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="home-menu-popover google-card is-hidden" data-home-menu-popover>
+                <button type="button" class="home-menu-pop-item" data-home-menu-item data-home-menu-href="home-management.html">
+                    <span class="material-icons">home_work</span>
+                    <span>Home management</span>
+                </button>
+                <button type="button" class="home-menu-pop-item" data-home-menu-item data-home-menu-href="home-layout.html">
+                    <span class="material-icons">tune</span>
+                    <span>Edit home</span>
+                </button>
+                <button type="button" class="home-menu-pop-item" data-home-menu-item data-home-menu-href="profile-edit.html">
+                    <span class="material-icons">person</span>
+                    <span>Edit profile</span>
+                </button>
+            </div>
+
+            <nav class="dock-container">
+                <div class="dock-item active" data-id="home" onclick="location.href='index.html'">
+                    <div class="icon-container">
+                        <span class="material-icons">home</span>
+                    </div>
+                </div>
+                <div class="dock-item" data-id="devices" onclick="location.href='devices.html'">
+                    <div class="icon-container">
+                        <span class="material-icons">grid_view</span>
+                    </div>
+                </div>
+
+                <div class="google-fab-wrapper">
+                    <button type="button" class="google-fab" data-assistant-open aria-label="Open AI Assistant">
+                        <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2L14.3 9.7L22 12L14.3 14.3L12 22L9.7 14.3L2 12L9.7 9.7L12 2Z"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="dock-item" data-id="settings" onclick="location.href='settings.html'">
+                    <div class="icon-container">
+                        <span class="material-icons">settings</span>
+                    </div>
+                </div>
+                <div class="dock-item" data-id="user" onclick="location.href='user.html'">
+                    <div class="icon-container">
+                        <span class="material-icons">person</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+
+</html>

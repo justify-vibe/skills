@@ -23,6 +23,8 @@ npx skills add <owner>/<repo>@ui-capture -y
 说明：
 - 本技能已内置“必须传目录”约束。
 - 执行录制时请使用：`pnpm run record -- <目录>`；未传目录会直接报错退出。
+- 产物默认输出到“执行命令的上下文目录”下：`.ui-capture/artifacts`。
+- 首次运行会自动生成：`<上下文目录>/.ui-capture/config.json`。
 
 ## 依赖
 - Node.js >= 18
@@ -50,8 +52,9 @@ pnpm run record -- /abs/path/to/proto
 ```
 
 3. 查看产物
-- 视频：playwright-artifacts/*/video.webm（1170x2532 @3x）
-- 截图：失败时自动生成；也可在用例中显式 `page.screenshot()`
+- 默认目录：`<上下文目录>/.ui-capture/artifacts`
+- 视频：`.ui-capture/artifacts/**/video.webm`（1170x2532 @3x）
+- 截图：失败时自动生成；也可在用例中显式 `page.screenshot()`（会跟随当前 outputDir）
 - Trace：失败用例自动保留，可用 `pnpm exec playwright show-trace <zip>` 查看
 
 ## 配置开关
@@ -59,12 +62,27 @@ pnpm run record -- /abs/path/to/proto
 - 调整 `use.video.size`、`deviceScaleFactor` 控制清晰度
 - 将 `webServer.command` 指向你的原型/站点启动命令
 - `pnpm run record -- <目录>` 会自动把该目录注入为 `UI_CAPTURE_ROOT`
+- 产物目录优先级：`UI_CAPTURE_ARTIFACTS_DIR` > `.ui-capture/config.json` > 默认 `.ui-capture/artifacts`
 - 可透传 Playwright 参数：`pnpm run record -- ./proto --project=iphone-15-pro-3x`
+
+## 项目配置（自动生成）
+首次执行 `record` 会在执行上下文目录生成：
+
+```json
+{
+  "version": 1,
+  "artifactsDir": ".ui-capture/artifacts",
+  "promptArtifactsDirEachRun": true
+}
+```
+
+- 你可以修改 `artifactsDir` 持久化默认产物目录。
+- 通过 `/ui-capture` 交互执行时，建议每次都确认本次产物目录。
 
 ## 截图示例
 在用例中插入：
 ```ts
-await page.screenshot({ path: `playwright-artifacts/home-hero.png`, fullPage: false });
+await page.screenshot({ path: testInfo.outputPath('home-hero.png'), fullPage: false });
 ```
 
 ## 注意

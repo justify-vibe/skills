@@ -1,8 +1,14 @@
 import { defineConfig, devices } from '@playwright/test';
+import { isAbsolute, resolve } from 'path';
 
 const PORT = Number(process.env.UI_CAPTURE_PORT || 5178);
 const ROOT_URL = process.env.UI_CAPTURE_BASE_URL || `http://localhost:${PORT}`;
 const PING_URL = process.env.UI_CAPTURE_URL || `${ROOT_URL}/index.html`;
+const CONTEXT_CWD = process.env.UI_CAPTURE_CONTEXT_CWD || process.cwd();
+const RAW_ARTIFACTS_DIR = process.env.UI_CAPTURE_ARTIFACTS_DIR || '.ui-capture/artifacts';
+const ARTIFACTS_ROOT = isAbsolute(RAW_ARTIFACTS_DIR)
+  ? RAW_ARTIFACTS_DIR
+  : resolve(CONTEXT_CWD, RAW_ARTIFACTS_DIR);
 
 export default defineConfig({
   testDir: './tests',
@@ -10,7 +16,7 @@ export default defineConfig({
   expect: { timeout: 5000 },
   fullyParallel: true,
   retries: 0,
-  reporter: [['html', { open: 'never' }]],
+  reporter: [['html', { open: 'never', outputFolder: resolve(ARTIFACTS_ROOT, 'html-report') }]],
   use: {
     baseURL: ROOT_URL,
     video: { mode: 'on', size: { width: 1170, height: 2532 } },
@@ -44,5 +50,5 @@ export default defineConfig({
       },
     },
   ],
-  outputDir: 'playwright-artifacts',
+  outputDir: ARTIFACTS_ROOT,
 });

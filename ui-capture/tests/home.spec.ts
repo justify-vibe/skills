@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 // 示例：首页文案与交互录制
 // 环境变量 UI_CAPTURE_BASE_URL 指定 baseURL；默认 5178 上的 index.html
 
-test('首页文案与交互（滑动/点击）', async ({ page }) => {
+test('首页文案与交互（滑动/点击）', async ({ page }, testInfo) => {
   await page.goto('/index.html');
 
   await expect(page.locator('.header-title')).toContainText('Hi,');
@@ -11,8 +11,8 @@ test('首页文案与交互（滑动/点击）', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'AUTOMATIONS' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'ROOMS' })).toBeVisible();
 
-  // 截图首页头部区域
-  await page.screenshot({ path: 'playwright-artifacts/home-hero.png', fullPage: false });
+  // 截图首页头部区域（跟随 Playwright 输出目录）
+  await page.screenshot({ path: testInfo.outputPath('home-hero.png'), fullPage: false });
 
   // 横向滚动 automations
   const autoRow = page.locator('[data-home-routines]');

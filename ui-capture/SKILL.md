@@ -29,7 +29,7 @@ description: Use when needing high‑fidelity UI capture for prototypes or sites
 示例片段（截取自 tests/home.spec.ts）：
 ```ts
 await page.goto('/index.html');
-await page.screenshot({ path: 'playwright-artifacts/home-hero.png', fullPage: false });
+await page.screenshot({ path: testInfo.outputPath('home-hero.png'), fullPage: false });
 const row = page.locator('[data-home-routines]');
 await row.evaluate((el) => el.scrollBy({ left: 800, behavior: 'smooth' }));
 ```
@@ -42,7 +42,7 @@ pnpm add -D @playwright/test playwright
 pnpm exec playwright install --with-deps
 ```
 
-说明：首次执行 `pnpm run record -- <目录>` 会自动完成依赖与浏览器安装。
+说明：首次执行 `pnpm run record -- <目录>` 会自动完成依赖与浏览器安装，并在上下文目录生成 `.ui-capture/config.json`。
 运行与查看产物（必须传目录）：
 ```bash
 pnpm run record -- ./proto
@@ -50,7 +50,7 @@ pnpm run record -- ./proto
 pnpm run record -- /abs/path/to/proto
 # 可透传 Playwright 参数：
 pnpm run record -- ./proto --project=iphone-15-pro-3x
-# 产物：skills/ui-capture/playwright-artifacts/*/{video.webm,trace.zip,*.png}
+# 默认产物：<上下文目录>/.ui-capture/artifacts/*/{video.webm,trace.zip,*.png}
 ```
 关键环境变量（任选）：
 - UI_CAPTURE_PORT：服务端口（默认 5178）
@@ -59,20 +59,23 @@ pnpm run record -- ./proto --project=iphone-15-pro-3x
 - UI_CAPTURE_NO_SERVER：为真时不由 Playwright 启动 webServer
 - UI_CAPTURE_SERVE：自定义静态服务命令（默认 node scripts/serve-static.js）
 - UI_CAPTURE_ROOT：静态根目录（由 `pnpm run record -- <目录>` 自动注入；也可手动设置）
+- UI_CAPTURE_ARTIFACTS_DIR：本次产物目录（优先级最高）
+- `.ui-capture/config.json`：项目默认配置（首次 record 自动生成）
 
 ## Implementation
 1) 准备要录制的原型目录（项目内或绝对路径）
-2) 根据需要调整 skills/ui-capture/playwright.config.ts：
+2) 每次录制前先确认“本次产物目录”（默认 `<上下文目录>/.ui-capture/artifacts`）
+3) 根据需要调整 skills/ui-capture/playwright.config.ts：
    - use.video.size、deviceScaleFactor、viewport、projects（设备）
    - webServer.command / url（或直接设置 UI_CAPTURE_SERVE / UI_CAPTURE_URL）
-3) 在 tests/*.spec.ts 用稳定动作描述交互与截图点位（参考已有用例）
-4) 执行 `pnpm run record -- <目录>`，收集视频/截图/trace 产物并分享
+4) 在 tests/*.spec.ts 用稳定动作描述交互与截图点位（参考已有用例）
+5) 执行 `pnpm run record -- <目录>`，收集视频/截图/trace 产物并分享
 
 ## Common Mistakes
 - 忘记安装浏览器依赖（执行 `pnpm exec playwright install --with-deps`）
 - baseURL 未指向有效页面；确认 `UI_CAPTURE_BASE_URL` 或 webServer `url`
 - 使用 wheel/触摸手势导致不稳定 → 改用 `page.evaluate(() => window.scrollBy(...))`
-- 产物目录不一致 → 统一使用 `outputDir: 'playwright-artifacts'`
+- 产物目录不一致 → 优先检查 `UI_CAPTURE_ARTIFACTS_DIR` 与 `.ui-capture/config.json` 的 `artifactsDir`
 
 ## Related Files
 - skills/ui-capture/playwright.config.ts — 全局配置（3x、设备、视频、trace、webServer）
